@@ -35,10 +35,17 @@ import_all_local_rules()
 import_all_external_rules()
 
 def run_rules(website):
+  print("Initiating the webdriver")
   driver = drivers.get_driver()
-  driver.get(website)
-  for module in imported_modules:
-    print(f"\nRunning {module.NAME} v{module.VERSION} accessibility rule on '{website}'")
-    module.run(driver)
+  try:
+    driver.get(website)
+    for module in imported_modules:
+      print(f"\nRunning {module.NAME} v{module.VERSION} accessibility rule on '{website}'")
+      module.run(driver)
+  except:
+    pass
+  finally:
+    print("Shutting down the webdriver")
+    driver.close()
 
 run_rules(config.get('website'))
