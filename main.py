@@ -42,8 +42,8 @@ def run_rules(website):
     for module in imported_modules:
       print(f"\nRunning {module.NAME} v{module.VERSION} accessibility rule on '{website}'")
       module.run(driver)
-  except:
-    pass
+  except Exception as e:
+    raise e
   finally:
     print("Shutting down the webdriver")
     driver.close()
