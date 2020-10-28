@@ -1,3 +1,0 @@
-# Driver settings
-driver: 'chrome' # Available options: chrome, firefox
-website: 'https://stackoverflow.com/' # Which website to crawl // TODO: Command line argument
