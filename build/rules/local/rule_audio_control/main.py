@@ -29,13 +29,14 @@ def run(driver):
 
     print(videos)
     print(audios)
-
     medias = []
-    for x in videos:
-        medias.append(x)
-
-    for y in audios:
-        medias = medias.append(y)
+    if videos is not None:
+        for x in videos:
+            medias.append(x)
+    
+    if audios is not None:
+        for y in audios:
+            medias = medias.append(y)
 
     if len(medias):
         for media in medias:
@@ -48,34 +49,34 @@ def run(driver):
 
             if properties["autoplay"] is None:
                 print(f"<Element> == {css_selector}-- has autoplay enabled")
+            else:
+                if media in videos:
+                    first = "vid1.png"
+                    second = "vid2.png"
+                    location = media.location
+                    size = media.size
+                    driver.save_screenshot(first)
+                    x = location['x']
+                    y = location['y']
+                    width = location['x']+size['width']
+                    height = location['y']+size['height']
+                    im = Image.open(first)
+                    im = im.crop((int(x), int(y), int(width), int(height)))
+                    vidstarthash = imagehash.average_hash(im)
+                    print("Start hash: ", vidstarthash)
+                    time.sleep(4)
+                    driver.save_screenshot(second)
+                    im = Image.open(second)
+                    im = im.crop((int(x), int(y), int(width), int(height)))
+                    videndhash = imagehash.average_hash(im)
+                    print("Start hash: ", videndhash)
 
-            if media in videos:
-                first = "vid1.png"
-                second = "vid2.png"
-                location = media.location
-                size = media.size
-                driver.save_screenshot(first)
-                x = location['x']
-                y = location['y']
-                width = location['x']+size['width']
-                height = location['y']+size['height']
-                im = Image.open(first)
-                im = im.crop((int(x), int(y), int(width), int(height)))
-                vidstarthash = imagehash.average_hash(im)
-                print("Start hash: ", vidstarthash)
-                time.sleep(4)
-                driver.save_screenshot(second)
-                im = Image.open(second)
-                im = im.crop((int(x), int(y), int(width), int(height)))
-                videndhash = imagehash.average_hash(im)
-                print("Start hash: ", videndhash)
+                    if (vidstarthash != videndhash):
+                        print(f"<Element> == {css_selector}-- has autoplay enabled")
+                    else:
+                        print(f"<Element> -- {css_selector}-- does not have autoplay enabled")
 
-                if (vidstarthash != videndhash):
-                    print(f"<Element> == {css_selector}-- has autoplay enabled")
-                else:
-                    print(f"<Element> -- {css_selector}-- does not have autoplay enabled")
-
-                remove_files(first, second)
+                    remove_files(first, second)
 
         for media in medias:
             if media is not None:
