@@ -29,79 +29,129 @@ def run(driver):
 
     print(videos)
     print(audios)
-    medias = []
-    if videos is not None:
-        for x in videos:
-            medias.append(x)
+    VACounter = 0
+    VCCounter = 0
+    AACounter = 0
+    ACCounter = 0
     
-    if audios is not None:
-        for y in audios:
-            medias = medias.append(y)
-
-    if len(medias):
-        for media in medias:
+    
+    #Check videos for attributes
+    print("\n####--Video Section--####")
+    if len(videos):
+        print("\n---Video Autoplay---")
+        for video in videos:
             properties = {
-                "class": f".{media.get_attribute('class')}" if (media.get_attribute('class') != '') else '',
-                "id": f"#{media.get_attribute('id')}" if (media.get_attribute('id') != '') else '',
-                "autoplay": media.get_attribute('autoplay'),
+                "class": f".{video.get_attribute('class')}" if (video.get_attribute('class') != '') else '',
+                "id": f"#{video.get_attribute('id')}" if (video.get_attribute('id') != '') else '',
+                "autoplay": video.get_attribute('autoplay'),
             }
             css_selector = f"media{properties['id']}{properties['class']}"
 
             if properties["autoplay"] is None:
-                print(f"<Element> == {css_selector}-- has autoplay enabled")
+                print(f"<Video Element>: --{css_selector}-- has autoplay disabled")
             else:
-                if media in videos:
-                    first = "vid1.png"
-                    second = "vid2.png"
-                    location = media.location
-                    size = media.size
-                    driver.save_screenshot(first)
-                    x = location['x']
-                    y = location['y']
-                    width = location['x']+size['width']
-                    height = location['y']+size['height']
-                    im = Image.open(first)
-                    im = im.crop((int(x), int(y), int(width), int(height)))
-                    vidstarthash = imagehash.average_hash(im)
-                    print("Start hash: ", vidstarthash)
-                    time.sleep(4)
-                    driver.save_screenshot(second)
-                    im = Image.open(second)
-                    im = im.crop((int(x), int(y), int(width), int(height)))
-                    videndhash = imagehash.average_hash(im)
-                    print("Start hash: ", videndhash)
+                first = "vid1.png"
+                second = "vid2.png"
+                location = video.location
+                size = video.size
+                driver.save_screenshot(first)
+                x = location['x']
+                y = location['y']
+                width = location['x']+size['width']
+                height = location['y']+size['height']
+                im = Image.open(first)
+                im = im.crop((int(x), int(y), int(width), int(height)))
+                vidstarthash = imagehash.average_hash(im)
+                print("Start hash: ", vidstarthash)
+                time.sleep(4)
+                driver.save_screenshot(second)
+                im = Image.open(second)
+                im = im.crop((int(x), int(y), int(width), int(height)))
+                videndhash = imagehash.average_hash(im)
+                print("Start hash: ", videndhash)
 
-                    if (vidstarthash != videndhash):
-                        print(f"<Element> == {css_selector}-- has autoplay enabled")
-                    else:
-                        print(f"<Element> -- {css_selector}-- does not have autoplay enabled")
+                if (vidstarthash != videndhash):
+                    VACounter += 1
+                    print(f"<Video Element> == {css_selector}-- has autoplay enabled")
+                else:
+                    print(f"<Video Element> -- {css_selector}-- does not have autoplay enabled")
 
-                    remove_files(first, second)
-
-        for media in medias:
-            if media is not None:
-                parent = media
-                found = True if (media.get_attribute('controls') is not None) else False
-                level = 0
-                while (found is False and level < 5):
-                    parent = driver.execute_script("return arguments[0].parentNode;", parent)
-                    controls = parent.find_elements(By.XPATH, ".//*[contains(@role, 'button') or contains(translate(@class,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'control')] | .//button")
-                    for control in controls:
-                        print(format_css_selector(driver, control))
-
-    # if control buttons found
-                    if len(controls):
-                        found = True
-                    else:
-                        level += 1
-
-            if found:
-                print(f"Controls found for Media {format_css_selector(driver, media)}")
+                remove_files(first, second)
+        print("Total video elements with autoplay: " + str(VACounter))
+        print("Total video elements without autoplay: " + str(len(videos) - VACounter))
+                
+                
+        #Check for Video Contols
+        print("\n---Video Control---")
+        for video in videos:
+            properties = {
+                "class": f".{video.get_attribute('class')}" if (video.get_attribute('class') != '') else '',
+                "id": f"#{video.get_attribute('id')}" if (video.get_attribute('id') != '') else '',
+                "controls": video.get_attribute('controls'),
+            }
+            css_selector = f"video{properties['id']}{properties['class']}"
+            
+            if properties["controls"] != None:
+                VCCounter += 1
+                print(f"<Video Element>: --{css_selector}-- has control attribute")
             else:
-                print(f"No controls found for Media {format_css_selector(driver, media)}")
+                print(f"<Video Element>: --{css_selector}-- has no control attribute")
+        print("Total video elements with controls: " + str(VCCounter))
+        print("Total video elements without controls: " + str(len(videos) - VCCounter))
+  
 
     else:
-        print("No media elements found on page")
+        print("No video elements found on page")
+    
+    
+    #check audios for attributes
+    print("\n####--Audio Section--####")
+    if len(audios):
+    
+        #Check for audio autoplay
+        print("\n---Audio Autoplay---")
+        for audio in audios:
+            properties = {
+                "class": f".{audio.get_attribute('class')}" if (audio.get_attribute('class') != '') else '',
+                "id": f"#{audio.get_attribute('id')}" if (audio.get_attribute('id') != '') else '',
+                "autoplay": audio.get_attribute('autoplay'),
+            }
+            css_selector = f"audio{properties['id']}{properties['class']}"
+            
+            if properties["autoplay"] is None:
+                print(f"<Audio Element>: --{css_selector}-- has autoplay disabled")
+            else:
+                AACounter += 1
+                print(f"<Audio Element>: --{css_selector}-- has autoplay enabled")
+                
+        print("\n---Audio Control---")
+        
+        for audio in audios:
+            properties = {
+                "class": f".{audio.get_attribute('class')}" if (audio.get_attribute('class') != '') else '',
+                "id": f"#{audio.get_attribute('id')}" if (audio.get_attribute('id') != '') else '',
+                "controls": audio.get_attribute('controls'),
+            }
+            css_selector = f"audio{properties['id']}{properties['class']}"
+            
+            if properties["controls"] != None:
+                ACCounter += 1
+                print(f"<Audio Element>: --{css_selector}-- has control attribute")
+            else:
+                print(f"<Audio Element>: --{css_selector}-- has no control attribute")
+        print("Total audio elements with controls: " + str(ACCounter))
+        print("Total audio elements without controls: " + str(len(audios) - ACCounter))
+    else:
+        print("No audio elements found on the page")
+        
+
+    #Summary output
+    print("\n####--Summary of Rule--####")
+    print("Total rule failures: " + str(VACounter + VCCounter + AACounter + ACCounter))
+    print("See above for details.")
+
+
+    
 
 
 def remove_files(firstimg, secimg):
