@@ -27,7 +27,7 @@ def run(driver):
     videos = driver.find_elements(By.TAG_NAME, "video")
     audios = driver.find_elements(By.TAG_NAME, "audio")
 
-    print(videos)
+    print(len(videos))
     print(audios)
     VACounter = 0
     VCCounter = 0
@@ -47,8 +47,9 @@ def run(driver):
             }
             css_selector = f"media{properties['id']}{properties['class']}"
 
-            if properties["autoplay"] is None:
-                print(f"<Video Element>: --{css_selector}-- has autoplay disabled")
+            if properties['autoplay'] == 'None':
+                print (properties['autoplay'])
+                print(f"<Video Element>: --{css_selector}-- does not have autoplay enabled")
             else:
                 first = "vid1.png"
                 second = "vid2.png"
@@ -62,13 +63,11 @@ def run(driver):
                 im = Image.open(first)
                 im = im.crop((int(x), int(y), int(width), int(height)))
                 vidstarthash = imagehash.average_hash(im)
-                print("Start hash: ", vidstarthash)
                 time.sleep(4)
                 driver.save_screenshot(second)
                 im = Image.open(second)
                 im = im.crop((int(x), int(y), int(width), int(height)))
                 videndhash = imagehash.average_hash(im)
-                print("Start hash: ", videndhash)
 
                 if (vidstarthash != videndhash):
                     VACounter += 1
