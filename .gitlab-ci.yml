@@ -9,6 +9,8 @@ build_a:
   stage: build
   script:
     - echo "This job builds something."
+    - ruby -v
+    - rake
 
 build_b:
   stage: build
