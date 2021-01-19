@@ -1,51 +1,41 @@
-# This file is a template, and might need editing before it works on your project.
-docker-build-master:
-  # Official docker image.
-  image: docker:latest
+stages:
+  - build
+  - test
+  - deploy
+
+image: alpine
+
+build_a:
   stage: build
-  services:
-    - docker:dind
-  before_script:
-    - docker login -u "igoldie" -p "DockerTemp" $CI_REGISTRY
   script:
-    - docker build --pull -t "gitlab-runner" .
-    - docker push "gitlab-runner"
-  only:
-    - master
+    - echo "This job builds something."
 
-docker-build:
-  # Official docker image.
-  image: docker:latest
+build_b:
   stage: build
-  services:
-    - docker:dind
-  before_script:
-    - docker login -u "igoldie" -p "DockerTemp" $CI_REGISTRY
   script:
-    - docker build --pull -t "gitlab-runner:$CI_COMMIT_REF_SLUG" .
-    - docker push "gitlab-runner:$CI_COMMIT_REF_SLUG"
-  except:
-    - master
+    - echo "This job builds something else."
 
-#stages:
- # - build
-  #- test
+test_a:
+  stage: test
+  script:
+    - echo "This job tests something. It will only run when all jobs in the"
+    - echo "build stage are complete."
 
-#build-code-job:
- # stage: build
-  #script:
-   # - echo "Check the ruby version, then build some Ruby project files:"
-    #- ruby -v
-    #- rake
+test_b:
+  stage: test
+  script:
+    - echo "This job tests something else. It will only run when all jobs in the"
+    - echo "build stage are complete too. It will start at about the same time as test_a."
 
-#test-code-job1:
- # stage: test
-  #script:
-   # - echo "If the files are built successfully, test some files with one command:"
-    #- rake test1
+deploy_a:
+  stage: deploy
+  script:
+    - echo "This job deploys something. It will only run when all jobs in the"
+    - echo "test stage complete."
 
-#test-code-job2:
- # stage: test
-  #script:
-   # - echo "If the files are built successfully, test other files with a different command:"
-    #- rake test2
+deploy_b:
+  stage: deploy
+  script:
+    - echo "This job deploys something else. It will only run when all jobs in the"
+    - echo "test stage complete. It will start at about the same time as deploy_a."
+
