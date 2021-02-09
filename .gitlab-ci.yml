@@ -3,7 +3,7 @@ stages:
   - test
   - deploy
 
-image: alpine
+image: docker:latest
 
 build:
   stage: build
