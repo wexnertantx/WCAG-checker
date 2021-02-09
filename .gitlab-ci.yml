@@ -23,10 +23,10 @@
    # - echo "This job deploys something. It will only run when all jobs in the"
     #- echo "test stage complete."
 
-image: docker:latest
+#image: docker:latest
 
-services:
-  - docker:dind
+#services:
+ # - docker:dind
 
 before_script:
   - docker info
