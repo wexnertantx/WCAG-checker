@@ -3,7 +3,7 @@ stages:
   - test
   - deploy
 
-image: alpine
+#image: alpine
 
 build:
   stage: build
@@ -22,13 +22,4 @@ deploy:
   script:
     - echo "This job deploys something. It will only run when all jobs in the"
     - echo "test stage complete."
-
-
-build:
-  stage: build
-  script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
-    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
-  except:
-    - master
 
