@@ -3,7 +3,7 @@ stages:
   - test
   - deploy
 
-#image: alpine
+image: alpine
 
 build:
   stage: build
