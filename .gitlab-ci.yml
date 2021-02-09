@@ -19,6 +19,9 @@ build:
   stage: build
   script:
     - echo "This job builds something."
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
+
+
 
 test:
   stage: test
