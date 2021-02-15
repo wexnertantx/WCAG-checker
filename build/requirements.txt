@@ -1,3 +1,5 @@
 ###### Requirements without Version Specifiers ######
 pyyaml
 selenium
+spacy
+spacy-langdetect

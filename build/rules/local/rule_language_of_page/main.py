@@ -2,6 +2,12 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 import os
+import spacy
+from spacy_langdetect import LanguageDetector
+from spacy.pipeline import Sentencizer
+from spacy.lang.xx import MultiLanguage
+from subprocess import check_output
+
 
 NAME = "Language of Page"
 DESCRIPTION = """The human language of each passage or phrase in the content can be programmatically determined except for proper names, technical terms, words of indeterminate language, and words or phrases that have become part of the vernacular of the immediately surrounding text."""
@@ -17,30 +23,42 @@ def format_css_selector(driver, element):
 '''
     
 def run(driver):
+    cmd='python -m spacy download xx_ent_wiki_sm'
+    check_output(cmd,shell=True).decode()
+    #load multi language (xx) and create pipelines, sentencizer for sentence boundaries
+    nlp = spacy.load("xx_ent_wiki_sm")
+    nlp.add_pipe(nlp.create_pipe("sentencizer"))
+    nlp.add_pipe(LanguageDetector(),name='language_detector', last=True)
+    
     print(f"Printing title from {NAME}: {driver.title}")
     WebDriverWait(driver, 10)
     time.sleep(2)
     
-    #this part can probably be optimised later
-    string = driver.page_source
-    substring = "lang="
-    for line in string.split():
-        if substring in line:
-            subLine = line.split('"')
-            language = subLine[1]
-    
-    
-    
-    if len(language):
-        #insert ai code to detect language
-        
-        #outputted string of language
-        detectedLang = ""
-        
-        #I'll add more system output later if need be to show more helpful language
-        if detectedLang == language:
-            print("Match: Language of page matches html lang tag")
-        else:
-            print("Error: Language of page does not match html lang tag")
+    #get html code, extract language element for cross checking
+    html_tag = driver.find_elements(By.TAG_NAME, "html")
+    lang = html_tag[0].get_attribute("lang")
+    #get <p> texts
+    ptext=driver.find_elements_by_tag_name('p')
+    total_sentence_count,matching_sentence_count=0,0
+    #strip all white spaces and use NLP to recognise text and language off wordbank, compare with html lang tag with score comparison
+    #A LITTLE BUGGY WITH BAD HTML CODES
+    if len(lang):
+
+        print("Detected <lang> tag: ",lang)
+
+        for p in ptext:
+            total_sentence_count=total_sentence_count+1
+            p.text.strip()
+            #print(p.text)
+            txt=nlp(p.text)
+            langscore=txt._.language
+            lan=langscore.get('language')
+            #print(langscore)
+            if (lan is not lang) and (langscore.get('score')<0.7):
+                print("Text \""+p.text+"\" is not of proper sentence or is of another language.")
+                print(langscore)
+            else:
+                matching_sentence_count=matching_sentence_count+1
+        print("%.2f%% of the page matches <lang> tag"%(((matching_sentence_count/total_sentence_count)*100)))
     else:
-        print("Page has no lang attribute.")
+        print("Page has no <lang> attribute")
