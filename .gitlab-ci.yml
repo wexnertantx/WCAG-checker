@@ -20,9 +20,8 @@ build:
   script:
     - echo "This job builds something."
     - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
-    #- docker push image
-    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
-
+    #- docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+    - docker push stgit.dcs.gla.ac.uk:5050/tp3-2020-cs27/cs27-main
 
 test:
   stage: test
