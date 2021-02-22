@@ -1,7 +1,7 @@
-stages:
-  - build
-  - test
-  - deploy
+#stages:
+ # - build
+  #- test
+  #- deploy
 
 image: docker:latest
 
@@ -15,24 +15,31 @@ before_script:
   #- docker login "$CI_REGISTRY"
   - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
 
+build-master:
+  stage: build
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+    - docker push "$CI_REGISTRY_IMAGE"
 build:
   stage: build
   script:
     - echo "This job builds something."
     - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
-    #- docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
-    - docker push stgit.dcs.gla.ac.uk:5050/tp3-2020-cs27/cs27-main
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+    #- docker push stgit.dcs.gla.ac.uk:5050/tp3-2020-cs27/cs27-main
+  except:
+    - master
 
-test:
-  stage: test
-  script:
-    - echo "This job tests something. It will only run when all jobs in the"
-    - echo "build stage are complete."
+#test:
+ # stage: test
+  #script:
+   # - echo "This job tests something. It will only run when all jobs in the"
+    #- echo "build stage are complete."
 
 
-deploy:
-  stage: deploy
-  script:
-    - echo "This job deploys something. It will only run when all jobs in the"
-    - echo "test stage complete."
+#deploy:
+ # stage: deploy
+  #script:
+   # - echo "This job deploys something. It will only run when all jobs in the"
+    #- echo "test stage complete."
 
