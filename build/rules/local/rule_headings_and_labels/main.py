@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import time,re
 import spacy
-
+from subprocess import check_output
 #pip install -U spacy
 #python -m spacy download en_core_web_lg <-how do i install thiz in requirement.txt
 #pip install beautifulsoup4
@@ -27,6 +27,8 @@ class bcolors:
 
     
 def run(driver):
+  cmd='python -m spacy download en_core_web_sm'
+  check_output(cmd,shell=True).decode()
   nlp = spacy.load("en_core_web_lg")
   print(f"Printing title from {NAME}: {driver.title}")
   html=driver.page_source
