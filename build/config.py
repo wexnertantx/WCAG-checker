@@ -8,7 +8,7 @@ def get(key):
   if (key):
     if (key not in config):
       print(f"{key} is not a valid config key")
-      return null
+      return None
     
     return config[key]
 
