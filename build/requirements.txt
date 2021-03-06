@@ -2,4 +2,6 @@
 pyyaml
 selenium
 spacy
+spacy-langdetect
 beautifulsoup4
+
