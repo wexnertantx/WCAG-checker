@@ -10,8 +10,6 @@ services:
 
 before_script:
   - docker info
-  #- echo "Registry $CI_REGISTRY"
-  #- echo "$CI_REGISTRY_PASSWORD $CI_REGISTRY_USER"
   - docker login 
   #potential timeout error effecting login (using pre-existing credentials instead)
   #- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
@@ -31,19 +29,19 @@ build:
   except:
     - master
 
-test:
-  stage: test
-  include:
-  - template: Code-Quality.gitlab-ci.yml
-
-  code_quality:
-    variables:
-      CODE_QUALITY_IMAGE: "registry.example.com/codequality-fork:latest"
 #test:
  # stage: test
-  #script:
-   # - echo "This job tests something. It will only run when all jobs in the"
-    #- echo "build stage are complete."
+  #include:
+  #- template: Code-Quality.gitlab-ci.yml
+
+  #code_quality:
+   # variables:
+    #  CODE_QUALITY_IMAGE: "registry.example.com/codequality-fork:latest"
+test:
+  stage: test
+  script:
+    - echo "This job tests something. It will only run when all jobs in the"
+    - echo "build stage are complete."
 
 
 #deploy:
