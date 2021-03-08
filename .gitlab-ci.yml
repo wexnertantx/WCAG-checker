@@ -42,7 +42,9 @@ test:
   script:
     - echo "This job tests something. It will only run when all jobs in the"
     - echo "build stage are complete."
-
+  include:
+    template: Code-Quality.gitlab-ci.yml
+    
 
 #deploy:
  # stage: deploy
