@@ -31,6 +31,14 @@ build:
   except:
     - master
 
+test:
+  stage: test
+  include:
+  - template: Code-Quality.gitlab-ci.yml
+
+  code_quality:
+    variables:
+      CODE_QUALITY_IMAGE: "registry.example.com/codequality-fork:latest"
 #test:
  # stage: test
   #script:
