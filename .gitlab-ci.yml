@@ -8,6 +8,9 @@ image: docker:latest
 services:
   - docker:dind
 
+include:
+    template: Code-Quality.gitlab-ci.yml
+
 before_script:
   - docker info
   - docker login 
@@ -42,8 +45,7 @@ test:
   script:
     - echo "This job tests something. It will only run when all jobs in the"
     - echo "build stage are complete."
-  include:
-    template: Code-Quality.gitlab-ci.yml
+  
     
 
 #deploy:
