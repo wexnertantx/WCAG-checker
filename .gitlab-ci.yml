@@ -13,7 +13,7 @@ include:
 
 before_script:
   - docker info
-  - docker login stgit.dcs.gla.ac.uk:5050 
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY 
   #potential timeout error effecting login (using pre-existing credentials instead)
   #- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
