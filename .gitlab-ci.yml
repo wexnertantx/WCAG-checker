@@ -40,8 +40,8 @@ test:
   stage: test
   script:
     - echo "This job tests something. It will only run when all jobs in the"
-    #- bundle exec rake db:create db:migrate
-    #- bundle exec rspec
+    - bundle exec rake db:create db:migrate
+    - bundle exec rspec
    
    
    # - docker run -d --env-file=.postgres-env postgres:9.5
