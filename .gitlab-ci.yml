@@ -7,7 +7,6 @@ image: docker:latest
 
 services:
   - docker:dind
-  - postgres:12.2
 
 include:
     template: Code-Quality.gitlab-ci.yml
