@@ -47,6 +47,9 @@ test:
   stage: test
   script:
     - echo "This job tests something. It will only run when all jobs in the"
+    - docker run -d --env-file=.postgres-env postgres:9.5
+    - docker run --env-file=.environment --link=postgres:db "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" nosetests --with-coverage --cover-erase --cover-package=$CI_PROJECT_NAME --cover-html
+    
     - echo "build stage are complete."
   
     
