@@ -13,6 +13,7 @@ include:
 
 before_script:
   - docker info
+  - bundle install
   #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY 
   #potential timeout error effecting login (using pre-existing credentials instead)
   #- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
@@ -40,13 +41,7 @@ test:
   stage: test
   script:
     - echo "This job tests something. It will only run when all jobs in the"
-    - bundle exec rake db:create db:migrate
-    - bundle exec rspec
-   
-   
-   # - docker run -d --env-file=.postgres-env postgres:9.5
-    #- docker run --env-file=.environment --link=postgres:db "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" nosetests --with-coverage --cover-erase --cover-package=${CI_PROJECT_NAME} --cover-html
-    
+    - bundle exec rake spec
     - echo "build stage are complete."
   
     
