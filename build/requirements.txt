@@ -4,4 +4,4 @@ selenium
 spacy
 spacy-langdetect
 beautifulsoup4
-
+imagehash
