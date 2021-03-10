@@ -1,10 +1,12 @@
 from platform import system
 from os import path, getcwd, mkdir, chmod
-import config
 
 from selenium import webdriver
 
-def get_driver(default_driver="chrome"):
+class DriverError(Exception):
+  pass
+
+def get_driver(driver_name="chrome"):
   drivers = {
     "chrome": {
       "file": "chromedriver",
@@ -20,7 +22,9 @@ def get_driver(default_driver="chrome"):
     # 'safari': '',
   }
 
-  driver_name = config.get('driver') or default_driver
+  if driver_name not in drivers:
+    raise DriverError("Invalid driver specified!")
+
   driver_options = drivers[driver_name]["options"]()
   driver_file = drivers[driver_name]["file"]  
   driver_exec = f"{driver_file}.exe"
