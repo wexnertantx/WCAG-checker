@@ -32,6 +32,7 @@ def get_driver(driver_name="chrome"):
     driver_exec = f"{driver_file}_{system().lower()}"
   
   driver_options.add_argument('--headless')
+  driver_options.add_argument('--use-fake-ui-for-media-stream')
 
   driver_path = path.join(getcwd(), 'drivers', driver_name)
   driver_logs_path = path.join(driver_path, 'logs')
