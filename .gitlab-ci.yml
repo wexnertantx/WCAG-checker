@@ -1,0 +1,48 @@
+#stages:
+ # - build
+  #- test
+  #- deploy
+
+image: docker:latest
+
+services:
+  - docker:dind
+  #- postgres:latest
+  
+include:
+    template: Code-Quality.gitlab-ci.yml
+
+before_script:
+  - docker info
+ # - bundle install
+  #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY 
+  #potential timeout error effecting login (using pre-existing credentials instead)
+  #- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+build-master:
+  stage: build
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+  
+  
+  
+   # - docker push "$CI_REGISTRY_IMAGE"
+build:
+  stage: build
+  script:
+    - echo "This job builds something."
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
+    #- docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+    #- docker push stgit.dcs.gla.ac.uk:5050/tp3-2020-cs27/cs27-main
+  except:
+    - master
+
+
+test:
+  stage: test
+  script:
+    - echo "This job tests something. It will only run when all jobs in the"
+    - echo "build stage are complete."
+  
+
+
