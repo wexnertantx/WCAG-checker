@@ -49,6 +49,7 @@ def run(driver):
 
         for p in ptext:
             total_sentence_count = total_sentence_count+1
+            #print(total_sentence_count)
             p.text.strip()
             #print(p.text)
             txt = nlp(p.text)
@@ -60,9 +61,9 @@ def run(driver):
                 print(langscore)
             else:
                 matching_sentence_count = matching_sentence_count+1
-                match_percentage = matching_sentence_count / total_sentence_count)*100)
+        match_percentage = ((matching_sentence_count / total_sentence_count)*100)
         #print("%.2f%% of the page matches <lang> tag" %(match_percentage))
-        return match_percentage,"of the page matches <lang> tag"
+        return "{:.2f}".format(match_percentage),"% of the page matches <lang> tag"
     else:
         #print("Page has no <lang> attribute")
         return -1,"Page has no <lang> attribute"

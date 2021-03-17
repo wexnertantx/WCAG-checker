@@ -61,8 +61,8 @@ def run(driver):
   average_sim=100*(overall_sim/headercounter)
   #if (average_sim>0.65):
     #print(f"{bcolors.OKGREEN}Overall description relevancy rate: (PASS) {bcolors.ENDC} "+str(average_sim)+"%")
-  return average_sim, "is relevant to its content description"
+  return "{:.2f}".format(average_sim), "% is relevant to its content description"
   #else:
     #print(f"{bcolors.FAIL}Overall description relevancy rate: (FAIL) {bcolors.ENDC} "+str(average_sim)+"%")
-  return -1,"No content found"
+  return -1,"No content found/Content could not be read"
   

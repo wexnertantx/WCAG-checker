@@ -1,6 +1,6 @@
-[1615974049.197][INFO]: Starting ChromeDriver 88.0.4324.96 (68dba2d8a0b149a1d3afac56fa74648032bcf46b-refs/branch-heads/4324@{#1784}) on port 51497
-[1615974049.197][INFO]: Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
-[1615974049.705][INFO]: [f6e6337564a4b1f814594c9d21fe6384] COMMAND InitSession {
+[1616002629.273][INFO]: Starting ChromeDriver 88.0.4324.96 (68dba2d8a0b149a1d3afac56fa74648032bcf46b-refs/branch-heads/4324@{#1784}) on port 56886
+[1616002629.273][INFO]: Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
+[1616002629.807][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND InitSession {
    "capabilities": {
       "alwaysMatch": {
          "browserName": "chrome",
@@ -24,7 +24,7 @@
       "version": ""
    }
 }
-[1615974049.707][INFO]: Populating Preferences file: {
+[1616002629.809][INFO]: Populating Preferences file: {
    "alternate_error_pages": {
       "enabled": false
    },
@@ -77,7 +77,7 @@
       "enabled": false
    }
 }
-[1615974049.713][INFO]: Populating Local State file: {
+[1616002629.815][INFO]: Populating Local State file: {
    "background_mode": {
       "enabled": false
    },
@@ -87,20 +87,20 @@
       }
    }
 }
-[1615974049.723][INFO]: Launching chrome: "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-background-networking --disable-backgrounding-occluded-windows --disable-client-side-phishing-detection --disable-default-apps --disable-hang-monitor --disable-popup-blocking --disable-prompt-on-repost --disable-sync --enable-automation --enable-blink-features=ShadowDOMV0 --enable-logging --headless --log-level=0 --no-first-run --no-service-autorun --password-store=basic --remote-debugging-port=0 --test-type=webdriver --use-fake-ui-for-media-stream --use-mock-keychain --user-data-dir="C:\Users\wexne\AppData\Local\Temp\scoped_dir18624_1409294651" data:,
-[1615974050.239][WARNING]: This version of ChromeDriver has not been tested with Chrome version 89.
-[1615974050.247][INFO]: resolved localhost to ["::1","127.0.0.1"]
-[1615974050.263][INFO]: [f6e6337564a4b1f814594c9d21fe6384] RESPONSE InitSession {
+[1616002629.819][INFO]: Launching chrome: "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-background-networking --disable-backgrounding-occluded-windows --disable-client-side-phishing-detection --disable-default-apps --disable-hang-monitor --disable-popup-blocking --disable-prompt-on-repost --disable-sync --enable-automation --enable-blink-features=ShadowDOMV0 --enable-logging --headless --log-level=0 --no-first-run --no-service-autorun --password-store=basic --remote-debugging-port=0 --test-type=webdriver --use-fake-ui-for-media-stream --use-mock-keychain --user-data-dir="C:\Users\wexne\AppData\Local\Temp\scoped_dir19960_1453224777" data:,
+[1616002630.242][WARNING]: This version of ChromeDriver has not been tested with Chrome version 89.
+[1616002630.248][INFO]: resolved localhost to ["::1","127.0.0.1"]
+[1616002630.255][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE InitSession {
    "capabilities": {
       "acceptInsecureCerts": false,
       "browserName": "chrome",
       "browserVersion": "89.0.4389.90",
       "chrome": {
          "chromedriverVersion": "88.0.4324.96 (68dba2d8a0b149a1d3afac56fa74648032bcf46b-refs/branch-heads/4324@{#1784})",
-         "userDataDir": "C:\\Users\\wexne\\AppData\\Local\\Temp\\scoped_dir18624_1409294651"
+         "userDataDir": "C:\\Users\\wexne\\AppData\\Local\\Temp\\scoped_dir19960_1453224777"
       },
       "goog:chromeOptions": {
-         "debuggerAddress": "localhost:51503"
+         "debuggerAddress": "localhost:56892"
       },
       "networkConnectionEnabled": false,
       "pageLoadStrategy": "normal",
@@ -119,18 +119,339 @@
       "webauthn:extension:largeBlob": true,
       "webauthn:virtualAuthenticators": true
    },
-   "sessionId": "f6e6337564a4b1f814594c9d21fe6384"
+   "sessionId": "b2995650a93812408e8a2f3013746f67"
 }
-[1615974050.266][INFO]: [f6e6337564a4b1f814594c9d21fe6384] COMMAND Navigate {
-   "url": "run"
+[1616002630.257][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND Navigate {
+   "url": "https://note.nkmk.me/en/python-function-return-multiple-values/"
 }
-[1615974050.266][INFO]: Waiting for pending navigations...
-[1615974050.269][INFO]: Done waiting for pending navigations. Status: ok
-[1615974050.270][INFO]: Waiting for pending navigations...
-[1615974050.270][INFO]: Done waiting for pending navigations. Status: ok
-[1615974050.270][INFO]: [f6e6337564a4b1f814594c9d21fe6384] RESPONSE Navigate ERROR invalid argument
-  (Session info: headless chrome=89.0.4389.90)
-[1615974050.272][INFO]: [f6e6337564a4b1f814594c9d21fe6384] COMMAND CloseWindow {
+[1616002630.257][INFO]: Waiting for pending navigations...
+[1616002630.258][INFO]: Done waiting for pending navigations. Status: ok
+[1616002630.445][INFO]: Waiting for pending navigations...
+[1616002631.395][INFO]: Done waiting for pending navigations. Status: ok
+[1616002631.395][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE Navigate
+[1616002631.397][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetTitle {
 
 }
-[1615974050.288][INFO]: [f6e6337564a4b1f814594c9d21fe6384] RESPONSE CloseWindow [  ]
+[1616002631.397][INFO]: Waiting for pending navigations...
+[1616002631.398][INFO]: Done waiting for pending navigations. Status: ok
+[1616002631.400][INFO]: Waiting for pending navigations...
+[1616002631.400][INFO]: Done waiting for pending navigations. Status: ok
+[1616002631.400][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetTitle "How to return multiple values from a function in Python | note.nkmk.me"
+[1616002633.401][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND FindElements {
+   "using": "css selector",
+   "value": "video"
+}
+[1616002633.401][INFO]: Waiting for pending navigations...
+[1616002633.402][INFO]: Done waiting for pending navigations. Status: ok
+[1616002633.410][INFO]: Waiting for pending navigations...
+[1616002633.411][INFO]: Done waiting for pending navigations. Status: ok
+[1616002633.411][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE FindElements [  ]
+[1616002633.412][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND FindElements {
+   "using": "css selector",
+   "value": "audio"
+}
+[1616002633.412][INFO]: Waiting for pending navigations...
+[1616002633.413][INFO]: Done waiting for pending navigations. Status: ok
+[1616002633.420][INFO]: Waiting for pending navigations...
+[1616002633.421][INFO]: Done waiting for pending navigations. Status: ok
+[1616002633.421][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE FindElements [  ]
+[1616002640.719][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetTitle {
+
+}
+[1616002640.719][INFO]: Waiting for pending navigations...
+[1616002640.719][INFO]: Done waiting for pending navigations. Status: ok
+[1616002640.721][INFO]: Waiting for pending navigations...
+[1616002640.722][INFO]: Done waiting for pending navigations. Status: ok
+[1616002640.722][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetTitle "How to return multiple values from a function in Python | note.nkmk.me"
+[1616002640.723][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetSource {
+
+}
+[1616002640.723][INFO]: Waiting for pending navigations...
+[1616002640.724][INFO]: Done waiting for pending navigations. Status: ok
+[1616002640.728][INFO]: Waiting for pending navigations...
+[1616002640.728][INFO]: Done waiting for pending navigations. Status: ok
+[1616002640.728][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetSource "\u003Chtml lang=\"en\">\u003Chead>\n\u003Cmeta charset=\"UTF-8\">\n\u003Clink rel=\"alternate\" href=\"https://note.nkmk.me/python-function-return-multiple-values/\" hreflang=\"ja\">\u003Clink rel=\"alternate\" href=\"https://note.nkmk.m..."
+[1616002646.481][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetTitle {
+
+}
+[1616002646.481][INFO]: Waiting for pending navigations...
+[1616002646.482][INFO]: Done waiting for pending navigations. Status: ok
+[1616002646.483][INFO]: Waiting for pending navigations...
+[1616002646.484][INFO]: Done waiting for pending navigations. Status: ok
+[1616002646.484][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetTitle "How to return multiple values from a function in Python | note.nkmk.me"
+[1616002648.486][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND FindElements {
+   "using": "css selector",
+   "value": "html"
+}
+[1616002648.486][INFO]: Waiting for pending navigations...
+[1616002648.487][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.493][INFO]: Waiting for pending navigations...
+[1616002648.494][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.494][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE FindElements [ {
+   "element-6066-11e4-a52e-4f735466cecf": "bc4641eb-ab20-44fc-9d6a-b3f0a2f1ebcd"
+} ]
+[1616002648.496][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND ExecuteScript {
+   "args": [ {
+      "ELEMENT": "bc4641eb-ab20-44fc-9d6a-b3f0a2f1ebcd",
+      "element-6066-11e4-a52e-4f735466cecf": "bc4641eb-ab20-44fc-9d6a-b3f0a2f1ebcd"
+   }, "lang" ],
+   "script": "return (function(){return function(){var d=this;function f(a){return\"string\"==typeof a};function h(a,b){this.code=a;this.a=l[a]||m;this.message=b||\"\";a=this.a.replace(/((?:^|\\s+)[a-z])/g,function(a){return a.toUpperCase().replace(/^[\\s\\xa0]+/g,\"\")});b=a.length-5;if(0>b||a.indexOf(\"Error\",b)!=b)a+=\"Error\";this.name=a;a=Error(this.message);a.name=this.name;this.stack=a.stack||\"\"}\n(function(){var a=Error;function b(){}b.prototype=a.prototype;h.b=a.prototype;h.prototype=new b;h.prototype.constructor=h;h.a=function(b,c,g){for(var e=Array(arguments.length-2),k=2;k\u003Carguments.length;k++)e[k-2]=arguments[k];return a.prototype[c].apply(b,e)}})();var m=\"unknown error\",l={15:\"element not selectable\",11:\"element not visible\"};l[31]=m;l[30]=m;l[24]=\"invalid cookie domain\";l[29]=\"invalid element coordinates\";l[12]=\"invalid element state\";l[32]=\"invalid selector\";l[51]=\"invalid selector\";\nl[52]=\"invalid selector\";l[17]=\"javascript error\";l[405]=\"unsupported operation\";l[34]=\"move target out of bounds\";l[27]=\"no such alert\";l[7]=\"no such element\";l[8]=\"no such frame\";l[23]=\"no such window\";l[28]=\"script timeout\";l[33]=\"session not created\";l[10]=\"stale element reference\";l[21]=\"timeout\";l[25]=\"unable to set cookie\";l[26]=\"unexpected alert open\";l[13]=m;l[9]=\"unknown command\";h.prototype.toString=function(){return this.name+\": \"+this.message};var n;a:{var p=d.navigator;if(p){var q=p.userAgent;if(q){n=q;break a}}n=\"\"}function r(a){return-1!=n.indexOf(a)};function t(a,b){for(var e=a.length,c=f(a)?a.split(\"\"):a,g=0;g\u003Ce;g++)g in c&&b.call(void 0,c[g],g,a)};function v(){return r(\"iPhone\")&&!r(\"iPod\")&&!r(\"iPad\")};function w(){return(r(\"Chrome\")||r(\"CriOS\"))&&!r(\"Edge\")};var x=r(\"Opera\"),y=r(\"Trident\")||r(\"MSIE\"),z=r(\"Edge\"),A=r(\"Gecko\")&&!(-1!=n.toLowerCase().indexOf(\"webkit\")&&!r(\"Edge\"))&&!(r(\"Trident\")||r(\"MSIE\"))&&!r(\"Edge\"),aa=-1!=n.toLowerCase().indexOf(\"webkit\")&&!r(\"Edge\");function B(){var a=d.document;return a?a.documentMode:void 0}var C;\na:{var D=\"\",E=function(){var a=n;if(A)return/rv\\:([^\\);]+)(\\)|;)/.exec(a);if(z)return/Edge\\/([\\d\\.]+)/.exec(a);if(y)return/\\b(?:MSIE|rv)[: ]([^\\);]+)(\\)|;)/.exec(a);if(aa)return/WebKit\\/(\\S+)/.exec(a);if(x)return/(?:Version)[ \\/]?(\\S+)/.exec(a)}();E&&(D=E?E[1]:\"\");if(y){var F=B();if(null!=F&&F>parseFloat(D)){C=String(F);break a}}C=D}var G;var H=d.document;G=H&&y?B()||(\"CSS1Compat\"==H.compatMode?parseInt(C,10):5):void 0;var ba=r(\"Firefox\"),ca=v()||r(\"iPod\"),da=r(\"iPad\"),I=r(\"Android\")&&!(w()||r(\"Firefox\")||r(\"Opera\")||r(\"Silk\")),ea=w(),J=r(\"Safari\")&&!(w()||r(\"Coast\")||r(\"Opera\")||r(\"Edge\")||r(\"Silk\")||r(\"Android\"))&&!(v()||r(\"iPad\")||r(\"iPod\"));function K(a){return(a=a.exec(n))?a[1]:\"\"}(function(){if(ba)return K(/Firefox\\/([0-9.]+)/);if(y||z||x)return C;if(ea)return v()||r(\"iPad\")||r(\"iPod\")?K(/CriOS\\/([0-9.]+)/):K(/Chrome\\/([0-9.]+)/);if(J&&!(v()||r(\"iPad\")||r(\"iPod\")))return K(/Version\\/([0-9.]+)/);if(ca||da){var a=/Version\\/(\\S+).*Mobile\\/(\\S+)/.exec(n);if(a)return a[1]+\".\"+a[2]}else if(I)return(a=K(/Android\\s+([0-9.]+)/))?a:K(/Version\\/([0-9.]+)/);return\"\"})();var L,M=function(){if(!A)return!1;var a=d.Components;if(!a)return!1;try{if(!a.classes)return!1}catch(g){return!1}var b=a.classes,a=a.interfaces,e=b[\"@mozilla.org/xpcom/version-comparator;1\"].getService(a.nsIVersionComparator),c=b[\"@mozilla.org/xre/app-info;1\"].getService(a.nsIXULAppInfo).version;L=function(a){e.compare(c,\"\"+a)};return!0}(),N=y&&!(8\u003C=Number(G)),fa=y&&!(9\u003C=Number(G));I&&M&&L(2.3);I&&M&&L(4);J&&M&&L(6);var ga={SCRIPT:1,STYLE:1,HEAD:1,IFRAME:1,OBJECT:1},O={IMG:\" \",BR:\"\\n\"};function P(a,b,e){if(!(a.nodeName in ga))if(3==a.nodeType)e?b.push(String(a.nodeValue).replace(/(\\r\\n|\\r|\\n)/g,\"\")):b.push(a.nodeValue);else if(a.nodeName in O)b.push(O[a.nodeName]);else for(a=a.firstChild;a;)P(a,b,e),a=a.nextSibling};function Q(a,b){b=b.toLowerCase();return\"style\"==b?ha(a.style.cssText):N&&\"value\"==b&&R(a,\"INPUT\")?a.value:fa&&!0===a[b]?String(a.getAttribute(b)):(a=a.getAttributeNode(b))&&a.specified?a.value:null}var ia=/[;]+(?=(?:(?:[^\"]*\"){2})*[^\"]*$)(?=(?:(?:[^']*'){2})*[^']*$)(?=(?:[^()]*\\([^()]*\\))*[^()]*$)/;\nfunction ha(a){var b=[];t(a.split(ia),function(a){var c=a.indexOf(\":\");0\u003Cc&&(a=[a.slice(0,c),a.slice(c+1)],2==a.length&&b.push(a[0].toLowerCase(),\":\",a[1],\";\"))});b=b.join(\"\");return b=\";\"==b.charAt(b.length-1)?b:b+\";\"}function S(a,b){N&&\"value\"==b&&R(a,\"OPTION\")&&null===Q(a,\"value\")?(b=[],P(a,b,!1),a=b.join(\"\")):a=a[b];return a}function R(a,b){b&&\"string\"!==typeof b&&(b=b.toString());return!!a&&1==a.nodeType&&(!b||a.tagName.toUpperCase()==b)}\nfunction T(a){return R(a,\"OPTION\")?!0:R(a,\"INPUT\")?(a=a.type.toLowerCase(),\"checkbox\"==a||\"radio\"==a):!1};var ja={\"class\":\"className\",readonly:\"readOnly\"},U=\"allowfullscreen allowpaymentrequest allowusermedia async autofocus autoplay checked compact complete controls declare default defaultchecked defaultselected defer disabled ended formnovalidate hidden indeterminate iscontenteditable ismap itemscope loop multiple muted nohref nomodule noresize noshade novalidate nowrap open paused playsinline pubdate readonly required reversed scoped seamless seeking selected truespeed typemustmatch willvalidate\".split(\" \");function V(a,b){var e=null,c=b.toLowerCase();if(\"style\"==c)return(e=a.style)&&!f(e)&&(e=e.cssText),e;if((\"selected\"==c||\"checked\"==c)&&T(a)){if(!T(a))throw new h(15,\"Element is not selectable\");b=\"selected\";e=a.type&&a.type.toLowerCase();if(\"checkbox\"==e||\"radio\"==e)b=\"checked\";return S(a,b)?\"true\":null}var g=R(a,\"A\");if(R(a,\"IMG\")&&\"src\"==c||g&&\"href\"==c)return(e=Q(a,c))&&(e=S(a,c)),e;if(\"spellcheck\"==c){e=Q(a,c);if(null!==e){if(\"false\"==e.toLowerCase())return\"false\";if(\"true\"==e.toLowerCase())return\"true\"}return S(a,\nc)+\"\"}g=ja[b]||b;a:if(f(U))c=f(c)&&1==c.length?U.indexOf(c,0):-1;else{for(var u=0;u\u003CU.length;u++)if(u in U&&U[u]===c){c=u;break a}c=-1}if(0\u003C=c)return(e=null!==Q(a,b)||S(a,g))?\"true\":null;try{var k=S(a,g)}catch(ka){}(c=null==k)||(c=typeof k,c=\"object\"==c&&null!=k||\"function\"==c);c?e=Q(a,b):e=k;return null!=e?e.toString():null}var W=[\"_\"],X=d;W[0]in X||!X.execScript||X.execScript(\"var \"+W[0]);\nfor(var Y;W.length&&(Y=W.shift());){var Z;if(Z=!W.length)Z=void 0!==V;Z?X[Y]=V:X[Y]&&X[Y]!==Object.prototype[Y]?X=X[Y]:X=X[Y]={}};; return this._.apply(null,arguments);}.apply({navigator:typeof window!='undefined'?window.navigator:null,document:typeof window!='undefined'?window.document:null}, arguments);}\n).apply(null, arguments);"
+}
+[1616002648.496][INFO]: Waiting for pending navigations...
+[1616002648.496][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.499][INFO]: Waiting for pending navigations...
+[1616002648.500][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.500][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE ExecuteScript "en"
+[1616002648.501][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND FindElements {
+   "using": "css selector",
+   "value": "p"
+}
+[1616002648.501][INFO]: Waiting for pending navigations...
+[1616002648.502][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.508][INFO]: Waiting for pending navigations...
+[1616002648.508][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.508][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE FindElements [ {
+   "element-6066-11e4-a52e-4f735466cecf": "10be0c41-e922-413a-95a4-573d9b1ec333"
+}, {
+   "element-6066-11e4-a52e-4f735466cecf": "091673b2-e870-43a2-ad4e-a97cd2f91adb"
+}, {
+   "element-6066-11e4-a52e-4f735466cecf": "984a2931-7009-455e-bbed-ceeca53c5268"
+}, {
+   "element-6066-11e4-a52e-4f735466cecf": "77c7b7aa-4a2f-4199-aa8c-d88a818ffbe2"
+}, {
+   "element-6066-11e4-a52e-4f735466cecf": "a7bdb96d-7c72-4a44-a011-08795a092043"
+}, {
+   "element-6066-11e4-a52e-4f735466cecf": "dea15e29-6d8c-4d2a-a41d-89e59f960e18"
+}, {
+   "element-6066-11e4-a52e-4f735466cecf": "0f3e857d-cda8-4c5a-a812-b46777efe64c"
+}, {
+   "element-6066-11e4-a52e-4f735466cecf": "9e409aff-d111-48ea-81a9-c061a9993231"
+}, {
+   "element-6066-11e4-a52e-4f735466cecf": "c89778f1-edc2-45a8-b3dc-99498eff41b9"
+}, {
+   "element-6066-11e4-a52e-4f735466cecf": "fddc65c5-c949-4dac-be47-5438752e09b9"
+}, {
+   "element-6066-11e4-a52e-4f735466cecf": "4edbab72-9722-4b69-91a1-2f44445735c6"
+}, {
+   "element-6066-11e4-a52e-4f735466cecf": "558b706d-8128-4dff-9bd3-ecc39b9b5f7c"
+} ]
+[1616002648.510][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "10be0c41-e922-413a-95a4-573d9b1ec333"
+}
+[1616002648.510][INFO]: Waiting for pending navigations...
+[1616002648.511][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.517][INFO]: Waiting for pending navigations...
+[1616002648.518][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.518][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "Returning multiple values from a function is quite cumbersome in C and other languages, but it is very easy to do in Python."
+[1616002648.519][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "10be0c41-e922-413a-95a4-573d9b1ec333"
+}
+[1616002648.519][INFO]: Waiting for pending navigations...
+[1616002648.520][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.523][INFO]: Waiting for pending navigations...
+[1616002648.523][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.523][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "Returning multiple values from a function is quite cumbersome in C and other languages, but it is very easy to do in Python."
+[1616002648.787][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "091673b2-e870-43a2-ad4e-a97cd2f91adb"
+}
+[1616002648.787][INFO]: Waiting for pending navigations...
+[1616002648.788][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.795][INFO]: Waiting for pending navigations...
+[1616002648.795][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.795][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "See the following article for the basics of functions in Python."
+[1616002648.796][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "091673b2-e870-43a2-ad4e-a97cd2f91adb"
+}
+[1616002648.796][INFO]: Waiting for pending navigations...
+[1616002648.797][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.800][INFO]: Waiting for pending navigations...
+[1616002648.800][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.800][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "See the following article for the basics of functions in Python."
+[1616002648.806][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "984a2931-7009-455e-bbed-ceeca53c5268"
+}
+[1616002648.806][INFO]: Waiting for pending navigations...
+[1616002648.806][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.813][INFO]: Waiting for pending navigations...
+[1616002648.814][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.814][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "In Python, you can return multiple values by simply return them separated by commas."
+[1616002648.815][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "984a2931-7009-455e-bbed-ceeca53c5268"
+}
+[1616002648.815][INFO]: Waiting for pending navigations...
+[1616002648.815][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.818][INFO]: Waiting for pending navigations...
+[1616002648.819][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.819][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "In Python, you can return multiple values by simply return them separated by commas."
+[1616002648.826][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "77c7b7aa-4a2f-4199-aa8c-d88a818ffbe2"
+}
+[1616002648.826][INFO]: Waiting for pending navigations...
+[1616002648.827][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.833][INFO]: Waiting for pending navigations...
+[1616002648.834][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.834][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "As an example, define a function that returns a string and a number as follows: Just write each value after the return, separated by commas."
+[1616002648.835][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "77c7b7aa-4a2f-4199-aa8c-d88a818ffbe2"
+}
+[1616002648.835][INFO]: Waiting for pending navigations...
+[1616002648.836][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.839][INFO]: Waiting for pending navigations...
+[1616002648.839][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.839][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "As an example, define a function that returns a string and a number as follows: Just write each value after the return, separated by commas."
+[1616002648.846][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "a7bdb96d-7c72-4a44-a011-08795a092043"
+}
+[1616002648.846][INFO]: Waiting for pending navigations...
+[1616002648.847][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.853][INFO]: Waiting for pending navigations...
+[1616002648.853][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.853][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "In Python, comma-separated values are considered tuples without parentheses, except where required by syntax. For this reason, the function in the above example returns a tuple with each value as a..."
+[1616002648.854][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "a7bdb96d-7c72-4a44-a011-08795a092043"
+}
+[1616002648.854][INFO]: Waiting for pending navigations...
+[1616002648.855][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.858][INFO]: Waiting for pending navigations...
+[1616002648.858][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.858][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "In Python, comma-separated values are considered tuples without parentheses, except where required by syntax. For this reason, the function in the above example returns a tuple with each value as a..."
+[1616002648.866][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "dea15e29-6d8c-4d2a-a41d-89e59f960e18"
+}
+[1616002648.866][INFO]: Waiting for pending navigations...
+[1616002648.866][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.873][INFO]: Waiting for pending navigations...
+[1616002648.874][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.874][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "Note that it is actually the comma which makes a tuple, not the parentheses. The parentheses are optional, except in the empty tuple case, or when they are needed to avoid syntactic ambiguity.\nBuil..."
+[1616002648.875][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "dea15e29-6d8c-4d2a-a41d-89e59f960e18"
+}
+[1616002648.875][INFO]: Waiting for pending navigations...
+[1616002648.876][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.880][INFO]: Waiting for pending navigations...
+[1616002648.881][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.881][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "Note that it is actually the comma which makes a tuple, not the parentheses. The parentheses are optional, except in the empty tuple case, or when they are needed to avoid syntactic ambiguity.\nBuil..."
+[1616002648.889][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "0f3e857d-cda8-4c5a-a812-b46777efe64c"
+}
+[1616002648.889][INFO]: Waiting for pending navigations...
+[1616002648.889][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.896][INFO]: Waiting for pending navigations...
+[1616002648.897][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.897][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "The return value is tuple."
+[1616002648.898][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "0f3e857d-cda8-4c5a-a812-b46777efe64c"
+}
+[1616002648.898][INFO]: Waiting for pending navigations...
+[1616002648.898][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.901][INFO]: Waiting for pending navigations...
+[1616002648.902][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.902][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "The return value is tuple."
+[1616002648.908][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "9e409aff-d111-48ea-81a9-c061a9993231"
+}
+[1616002648.908][INFO]: Waiting for pending navigations...
+[1616002648.910][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.917][INFO]: Waiting for pending navigations...
+[1616002648.917][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.917][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "Each element has a type defined in the function."
+[1616002648.918][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "9e409aff-d111-48ea-81a9-c061a9993231"
+}
+[1616002648.918][INFO]: Waiting for pending navigations...
+[1616002648.919][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.922][INFO]: Waiting for pending navigations...
+[1616002648.922][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.922][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "Each element has a type defined in the function."
+[1616002648.928][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "c89778f1-edc2-45a8-b3dc-99498eff41b9"
+}
+[1616002648.928][INFO]: Waiting for pending navigations...
+[1616002648.929][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.935][INFO]: Waiting for pending navigations...
+[1616002648.935][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.935][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "Of course, specifying an index that exceeds the number of defined return values will occur an error."
+[1616002648.936][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "c89778f1-edc2-45a8-b3dc-99498eff41b9"
+}
+[1616002648.936][INFO]: Waiting for pending navigations...
+[1616002648.937][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.940][INFO]: Waiting for pending navigations...
+[1616002648.940][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.940][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "Of course, specifying an index that exceeds the number of defined return values will occur an error."
+[1616002648.947][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "fddc65c5-c949-4dac-be47-5438752e09b9"
+}
+[1616002648.947][INFO]: Waiting for pending navigations...
+[1616002648.948][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.954][INFO]: Waiting for pending navigations...
+[1616002648.955][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.955][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "You can unpack and assign multiple return values to different variables."
+[1616002648.956][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "fddc65c5-c949-4dac-be47-5438752e09b9"
+}
+[1616002648.956][INFO]: Waiting for pending navigations...
+[1616002648.956][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.959][INFO]: Waiting for pending navigations...
+[1616002648.959][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.959][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "You can unpack and assign multiple return values to different variables."
+[1616002648.977][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "4edbab72-9722-4b69-91a1-2f44445735c6"
+}
+[1616002648.977][INFO]: Waiting for pending navigations...
+[1616002648.977][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.984][INFO]: Waiting for pending navigations...
+[1616002648.985][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.985][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "Same for 3 or more return values."
+[1616002648.986][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "4edbab72-9722-4b69-91a1-2f44445735c6"
+}
+[1616002648.986][INFO]: Waiting for pending navigations...
+[1616002648.987][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.990][INFO]: Waiting for pending navigations...
+[1616002648.990][INFO]: Done waiting for pending navigations. Status: ok
+[1616002648.990][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "Same for 3 or more return values."
+[1616002649.023][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "4edbab72-9722-4b69-91a1-2f44445735c6"
+}
+[1616002649.023][INFO]: Waiting for pending navigations...
+[1616002649.024][INFO]: Done waiting for pending navigations. Status: ok
+[1616002649.027][INFO]: Waiting for pending navigations...
+[1616002649.027][INFO]: Done waiting for pending navigations. Status: ok
+[1616002649.027][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "Same for 3 or more return values."
+[1616002649.029][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "558b706d-8128-4dff-9bd3-ecc39b9b5f7c"
+}
+[1616002649.029][INFO]: Waiting for pending navigations...
+[1616002649.029][INFO]: Done waiting for pending navigations. Status: ok
+[1616002649.037][INFO]: Waiting for pending navigations...
+[1616002649.037][INFO]: Done waiting for pending navigations. Status: ok
+[1616002649.037][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "Using [] returns list instead of tuple."
+[1616002649.038][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetElementText {
+   "id": "558b706d-8128-4dff-9bd3-ecc39b9b5f7c"
+}
+[1616002649.038][INFO]: Waiting for pending navigations...
+[1616002649.039][INFO]: Done waiting for pending navigations. Status: ok
+[1616002649.042][INFO]: Waiting for pending navigations...
+[1616002649.043][INFO]: Done waiting for pending navigations. Status: ok
+[1616002649.043][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetElementText "Using [] returns list instead of tuple."
+[1616002649.052][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetTitle {
+
+}
+[1616002649.052][INFO]: Waiting for pending navigations...
+[1616002649.052][INFO]: Done waiting for pending navigations. Status: ok
+[1616002649.053][INFO]: Waiting for pending navigations...
+[1616002649.054][INFO]: Done waiting for pending navigations. Status: ok
+[1616002649.054][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetTitle "How to return multiple values from a function in Python | note.nkmk.me"
+[1616002649.056][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND GetTitle {
+
+}
+[1616002649.056][INFO]: Waiting for pending navigations...
+[1616002649.056][INFO]: Done waiting for pending navigations. Status: ok
+[1616002649.057][INFO]: Waiting for pending navigations...
+[1616002649.057][INFO]: Done waiting for pending navigations. Status: ok
+[1616002649.057][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE GetTitle "How to return multiple values from a function in Python | note.nkmk.me"
+[1616002649.059][INFO]: [b2995650a93812408e8a2f3013746f67] COMMAND CloseWindow {
+
+}
+[1616002649.126][INFO]: [b2995650a93812408e8a2f3013746f67] RESPONSE CloseWindow [  ]
