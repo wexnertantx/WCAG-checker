@@ -28,7 +28,7 @@ def run(driver):
     #load multi language (xx) and create pipelines, sentencizer for sentence boundaries
     nlp = spacy.load("xx_ent_wiki_sm")
     nlp.add_pipe(nlp.create_pipe("sentencizer"))
-    nlp.add_pipe(LanguageDetector(),name='language_detector', last=True)
+    nlp.add_pipe(LanguageDetector(), name='language_detector', last=True)
     
     print(f"Printing title from {NAME}: {driver.title}")
     WebDriverWait(driver, 10)
@@ -38,27 +38,31 @@ def run(driver):
     html_tag = driver.find_elements(By.TAG_NAME, "html")
     lang = html_tag[0].get_attribute("lang")
     #get <p> texts
-    ptext=driver.find_elements_by_tag_name('p')
-    total_sentence_count,matching_sentence_count=0,0
-    #strip all white spaces and use NLP to recognise text and language off wordbank, compare with html lang tag with score comparison
+    ptext = driver.find_elements_by_tag_name('p')
+    total_sentence_count, matching_sentence_count = 0, 0
+    #strip all white spaces and use NLP to recognise text and language off 
+    # wordbank, compare with html lang tag with score comparison
     #A LITTLE BUGGY WITH BAD HTML CODES
     if len(lang):
 
-        print("Detected <lang> tag: ",lang)
+        print("Detected <lang> tag: ", lang)
 
         for p in ptext:
-            total_sentence_count=total_sentence_count+1
+            total_sentence_count = total_sentence_count+1
             p.text.strip()
             #print(p.text)
-            txt=nlp(p.text)
-            langscore=txt._.language
-            lan=langscore.get('language')
+            txt = nlp(p.text)
+            langscore = txt._.language
+            lan = langscore.get('language')
             #print(langscore)
             if (lan is not lang) and (langscore.get('score')<0.7):
                 print("Text \""+p.text+"\" is not of proper sentence or is of another language.")
                 print(langscore)
             else:
-                matching_sentence_count=matching_sentence_count+1
-        print("%.2f%% of the page matches <lang> tag"%(((matching_sentence_count/total_sentence_count)*100)))
+                matching_sentence_count = matching_sentence_count+1
+                match_percentage = matching_sentence_count / total_sentence_count)*100)
+        #print("%.2f%% of the page matches <lang> tag" %(match_percentage))
+        return match_percentage,"of the page matches <lang> tag"
     else:
-        print("Page has no <lang> attribute")
+        #print("Page has no <lang> attribute")
+        return -1,"Page has no <lang> attribute"

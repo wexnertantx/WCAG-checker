@@ -30,6 +30,9 @@ COLORS = {
   "bright_cyan": '\u001b[36;1m',
   "bright_white": '\u001b[37;1m',
 }
+def print_results(percent,modstr):
+  
+
 
 def print_begin_color(color):
   sys.stdout.write(COLORS[color] if color in COLORS else COLORS['reset'])
