@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import sys, getopt, importlib, re, traceback
 import drivers
-import os
 
 from platform import system
 from os import listdir
@@ -12,8 +11,6 @@ LOCAL_RULES_PATH = "rules/local"
 EXTERNAL_RULES_PATH = "rules/external"
 
 imported_modules = []
-
-os.system('color')
 
 COLORS = {
   "Windows": {
