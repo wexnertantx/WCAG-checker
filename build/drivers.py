@@ -123,6 +123,7 @@ def get_driver(driver_name="chrome"):
     driver["exe_name"] = f"{driver_file}_{system().lower()}"
   
   driver["options"].add_argument('--headless')
+  driver["options"].add_argument('--use-fake-ui-for-media-stream')
 
   # driver_logs_path = path.join(getcwd(), 'logs')
   # if (not path.exists(driver_logs_path)):
@@ -143,7 +144,7 @@ def get_driver(driver_name="chrome"):
     try:
       wbdrv = drivers[driver_name]["init"](executable_path=driver["exe_path"], options=driver["options"])
     except Exception as e:
-      wbdrv = None
+      wbdrv = None  
 
   if (not wbdrv):
     download_drivers(driver_name)
