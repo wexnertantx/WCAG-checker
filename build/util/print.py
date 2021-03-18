@@ -1,3 +1,4 @@
+from platform import system
 import sys
 
 CONSOLE_COLORS = {
