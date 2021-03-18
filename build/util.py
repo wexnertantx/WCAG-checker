@@ -66,3 +66,12 @@ def print_info(*args, **kwargs):
 
 def print_success(*args, **kwargs):
   print_color(*args, **kwargs, color="bright_green")
+
+def print_help():
+  print_begin_color('bright_yellow')
+  print("usage: main.py [-d | -driver <driver>] <website>")
+  print("\navailable drivers:")
+  print("\tchrome (default)")
+  print("\tfirefox")
+  print_end_color()
+  sys.exit()
