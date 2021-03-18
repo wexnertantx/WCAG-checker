@@ -46,3 +46,9 @@ def get_color_code(color):
   if (color not in CONSOLE_COLORS[console]):
     color = 'reset'
   return CONSOLE_COLORS[console][color]
+
+def print_begin_color(color):
+  sys.stdout.write(get_color_code(color))
+
+def print_end_color():
+  sys.stdout.write(get_color_code('reset'))
