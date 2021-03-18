@@ -76,3 +76,13 @@ def print_help():
   print("\tfirefox")
   print_end_color()
   sys.exit()
+
+def print_results(resultpercent, modstr):
+  if float(resultpercent) > 50:
+    print_success(f"{resultpercent}{modstr}")
+  elif float(resultpercent < 50):
+    print_error(f"{resultpercent}{modstr}")
+  elif resultpercent == -1:
+    print_error(f"{modstr}")
+  else:
+    print("")
