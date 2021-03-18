@@ -80,6 +80,7 @@ def import_all_external_rules():
   pass
 
 def run_rules(driver_name, website):
+  driver = None
   try:
     print_info(f"Initiating the '{driver_name or ''}' webdriver")
     driver = drivers.get_driver(driver_name)
@@ -98,7 +99,6 @@ def run_rules(driver_name, website):
         print_end_color()
   except drivers.DriverError as err:
     print_error("\nDriver error:", err, end='\n')
-    print_help()
   except SeleniumExceptions.InvalidArgumentException as err:
     print_error("\nSelenium driver could not start, please check if the website address is valid")
     print_error("Error:", err, end='\n')
