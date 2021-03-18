@@ -5,6 +5,7 @@ import drivers
 from os import listdir
 from os.path import isdir, isfile, join
 from selenium.common import exceptions as SeleniumExceptions
+# Custom imports
 from util.print import *
 
 LOCAL_RULES_PATH = "rules/local"
