@@ -57,3 +57,12 @@ def print_color(*args, color='reset', **kwargs):
   print_begin_color(color)
   print(*args, **kwargs)
   print_end_color()
+
+def print_error(*args, **kwargs):
+  print_color(*args, **kwargs, color="bright_red")
+
+def print_info(*args, **kwargs):
+  print_color(*args, **kwargs, color="cyan")
+
+def print_success(*args, **kwargs):
+  print_color(*args, **kwargs, color="bright_green")
