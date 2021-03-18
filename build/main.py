@@ -30,6 +30,20 @@ COLORS = {
   "bright_cyan": '\u001b[36;1m',
   "bright_white": '\u001b[37;1m',
 }
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
+      
+
 
 def print_begin_color(color):
   sys.stdout.write(COLORS[color] if color in COLORS else COLORS['reset'])
@@ -59,6 +73,16 @@ def print_help():
   print("\tfirefox")
   print_end_color()
   sys.exit()
+
+def print_results(resultpercent,modstr):
+  if float(resultpercent)>50:
+    print_success(f"{resultpercent}{modstr}")
+  elif float(resultpercent<50):
+    print_error(f"{resultpercent}{modstr}")
+  elif resultpercent==-1:
+    print_error(f"{modstr}")
+  else:
+    print("")
 
 def import_all_local_rules():
   local_module_path = LOCAL_RULES_PATH.replace('/', '.')
@@ -90,7 +114,11 @@ def run_rules(driver_name, website):
     for module in imported_modules:
       try:
         print_info(f"\nRunning {module.NAME} v{module.VERSION} accessibility rule on '{website}'")
-        module.run(driver)
+        try:
+          result_percentage,result_string = module.run(driver)
+          print_results(result_percentage,result_string)
+        except Exception as err:
+          print("No output for this module")
       except Exception as err:
         print_begin_color('bright_red')
         print(f"Uncaught error detected in rule {module.NAME}")
