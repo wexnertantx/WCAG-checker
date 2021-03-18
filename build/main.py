@@ -35,7 +35,7 @@ def print_begin_color(color):
   sys.stdout.write(COLORS[color] if color in COLORS else COLORS['reset'])
 
 def print_end_color():
-  sys.stdout.write("\u001b[0m")
+  sys.stdout.write("\u001b[0m\n")
 
 def print_color(*args, color='reset', **kwargs):
   print_begin_color(color)
@@ -80,6 +80,7 @@ def import_all_external_rules():
   pass
 
 def run_rules(driver_name, website):
+  driver = None
   try:
     print_info(f"Initiating the '{driver_name or ''}' webdriver")
     driver = drivers.get_driver(driver_name)
@@ -98,7 +99,6 @@ def run_rules(driver_name, website):
         print_end_color()
   except drivers.DriverError as err:
     print_error("\nDriver error:", err, end='\n')
-    print_help()
   except SeleniumExceptions.InvalidArgumentException as err:
     print_error("\nSelenium driver could not start, please check if the website address is valid")
     print_error("Error:", err, end='\n')
@@ -106,7 +106,7 @@ def run_rules(driver_name, website):
     print_begin_color('bright_red')
     print("\nSelenium driver could not start, please check the traceback below to find the reason\n")
     traceback.print_exc(file=sys.stdout)
-    print_begin_end()
+    print_end_color()
 
   if driver != None:
     print_info("\nShutting down the webdriver")

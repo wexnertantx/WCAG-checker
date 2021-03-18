@@ -5,3 +5,4 @@ spacy
 spacy-langdetect
 beautifulsoup4
 imagehash
+google-cloud-vision
