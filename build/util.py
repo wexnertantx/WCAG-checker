@@ -52,3 +52,8 @@ def print_begin_color(color):
 
 def print_end_color():
   sys.stdout.write(get_color_code('reset'))
+
+def print_color(*args, color='reset', **kwargs):
+  print_begin_color(color)
+  print(*args, **kwargs)
+  print_end_color()
