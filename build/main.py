@@ -43,7 +43,11 @@ def run_rules(driver_name, website):
     for module in imported_modules:
       try:
         print_info(f"\nRunning {module.NAME} v{module.VERSION} accessibility rule on '{website}'")
-        module.run(driver)
+        try:
+          result_percentage,result_string = module.run(driver)
+          print_results(result_percentage,result_string)
+        except Exception as err:
+          print("No output for this module")
       except Exception as err:
         print_begin_color('bright_red')
         print(f"Uncaught error detected in rule {module.NAME}")

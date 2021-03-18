@@ -141,6 +141,7 @@ def run(driver):
     print("\n####--Summary of Rule--####")
     print("Total rule failures: " + str(VACounter + VCCounter + AACounter + ACCounter))
     print("See above for details.")
+    
 
 
     
