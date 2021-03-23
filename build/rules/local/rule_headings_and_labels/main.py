@@ -54,6 +54,11 @@ def run(driver):
 
     if (len(header_elements)):
       for header in header_elements:
+        if (len(header.text) == 0):
+          header_content['fail'].append(header)
+          print_error(f"Header {CS27Format.css_selector(driver, header)} does not have any text")
+          continue
+          
         sibling = getNextSibling(driver, header)
         header_tag = CS27Format.getElementTag(driver, header)
         while (sibling != None and CS27Format.getElementTag(driver, sibling) == header_tag):
