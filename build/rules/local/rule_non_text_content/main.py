@@ -19,7 +19,7 @@ DESCRIPTION = """All non-text content that is presented to the user has a text a
 LINK = "https://www.w3.org/TR/WCAG21/#non-text-content"
 VERSION = 1
 SCRIPT_DIR = path.dirname(path.realpath(__file__))
-SKIP = True
+SKIP = False
 
 # Set env for google API credentials
 environ["GOOGLE_APPLICATION_CREDENTIALS"] = path.join(getcwd(), "credentials", "google_api.json")
@@ -126,8 +126,9 @@ def run(driver):
 
       if (len(results_percentage)):
         return (sum(results_percentage) / len(results_percentage)) * 100, "% of the page's image content is correct"
+    else:
+      return -1, "Page has no images"
 
   except Exception as err:
     print_error(f"[Error] {NAME} rule failed execution:", err, '\n')
-  else:
-    raise CS27Exceptions.NoResult("No results have been returned from this rule!")
+

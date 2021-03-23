@@ -19,7 +19,7 @@ DESCRIPTION = """If any audio on a Web page plays automatically for more than 3 
 LINK = "https://www.w3.org/TR/WCAG21/#headings-and-labels"
 VERSION = 1
 SCRIPT_DIR = path.dirname(path.realpath(__file__))
-SKIP = True
+SKIP = False
 
 ###
 # Amount of parent levels to look through to find custom media controls, default 2
@@ -92,6 +92,8 @@ def run(driver):
 
         if (properties['autoplay'] != None):
           media_autoplay.append(properties)
+    else:
+      return -1, "Page has no media"
 
     if (len(media_autoplay)):
       for element in media_autoplay:
@@ -131,5 +133,4 @@ def run(driver):
 
   except Exception as err:
     print_error(f"[Error] {NAME} rule failed execution:", err, '\n')
-  else:
-    raise CS27Exceptions.NoResult("No results have been returned from this rule!")
+    

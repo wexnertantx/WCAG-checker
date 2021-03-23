@@ -22,7 +22,7 @@ DESCRIPTION = """The human language of each passage or phrase in the content can
 LINK = "https://www.w3.org/WAI/WCAG21/Understanding/language-of-page.html"
 VERSION = 1
 SCRIPT_DIR = path.dirname(path.realpath(__file__))
-SKIP = True
+SKIP = False
 
 @Language.factory("language_detector")
 def create_language_detector(nlp, name):
@@ -81,5 +81,3 @@ def run(driver):
     
   except Exception as err:
     print_error(f"[Error] {NAME} rule failed execution:", err, '\n')
-  else:
-    raise CS27Exceptions.NoResult("No results have been returned from this rule!")
