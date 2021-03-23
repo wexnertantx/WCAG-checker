@@ -11,7 +11,7 @@ from google.cloud import vision
 # Custom imports
 import util.errors as CS27Exceptions
 from util.print import *
-import util.format
+import util.format as CS27Format
 
 NAME = "Non-text Content"
 DESCRIPTION = """All non-text content that is presented to the user has a text alternative
@@ -19,33 +19,31 @@ DESCRIPTION = """All non-text content that is presented to the user has a text a
 LINK = "https://www.w3.org/TR/WCAG21/#non-text-content"
 VERSION = 1
 SCRIPT_DIR = path.dirname(path.realpath(__file__))
-SKIP = False
+SKIP = True
 
 # Set env for google API credentials
 environ["GOOGLE_APPLICATION_CREDENTIALS"] = path.join(getcwd(), "credentials", "google_api.json")
 
 def run(driver):
   if (SKIP):
-    raise CS27Exceptions.NoOutput("This rule is flagged to be skipped, check the SKIP flag in your rule!")
+    raise CS27Exceptions.NoResult("This rule is flagged to be skipped, check the SKIP flag in your rule!")
 
-  results_percentage = []
   try:
-    client = vision.ImageAnnotatorClient() # Google Cloud Vision Client
-
     tmp_folder = path.join(SCRIPT_DIR, "_tmp")
     if (not path.exists(tmp_folder)):
       mkdir(tmp_folder, mode=0o777)
 
-    images = driver.find_elements(By.TAG_NAME, "img")
+    results_percentage = []
 
-    if len(images):
+    images = driver.find_elements(By.TAG_NAME, "img")
+    if (len(images)):
       alt_result = {
         "fail": [],
         "success": [],
         "visible": 0,
       }
 
-      for i, image in enumerate(images):
+      for image in images:
         if image.is_displayed() and image.is_enabled():
           alt_result['visible'] += 1
     
@@ -56,10 +54,10 @@ def run(driver):
         }
         status = True if (properties['alt'] != '') else False
 
-        if status:
+        if (status):
           alt_result['success'].append(properties)
         else:
-          print_error(f"'{util.format.css_selector(driver, image)}' does not have an alternative text!")
+          print_error(f"'{CS27Format.css_selector(driver, image)}' does not have an alternative text!")
           alt_result['fail'].append(properties)
     
       success_count = len(alt_result['success'])
@@ -85,6 +83,8 @@ def run(driver):
         "success": [],
       }
 
+      client = vision.ImageAnnotatorClient() # Google Cloud Vision Client
+
       # Loop through images that have an "alt" attribute
       for image in alt_result['success']:
         # Download the image and read its bytes
@@ -100,7 +100,7 @@ def run(driver):
         for label in labels:
           label_text = label.description.lower()
           # Append all the translations found for a label into the regex label matcher list
-          if label_text in translations:
+          if (label_text in translations):
             regex_labels.append('|'.join(translations[label_text]))
           # Append the label itself into the regex label matcher list
           regex_labels.append(label_text)
@@ -113,7 +113,7 @@ def run(driver):
           content_result['success'].append(image)
         else:
           content_result['fail'].append(image)
-          print_error(f"'{util.format.css_selector(driver, image['self'])}' alternative text: \"{image['alt']}\" does not match the image content!")
+          print_error(f"'{CS27Format.css_selector(driver, image['self'])}' alternative text: \"{image['alt']}\" does not match the image content!")
       
       success_count = len(content_result['success'])
       fail_count = len(content_result['fail'])
@@ -130,4 +130,4 @@ def run(driver):
   except Exception as err:
     print_error(f"[Error] {NAME} rule failed execution:", err, '\n')
 
-  raise CS27Exceptions.NoOutput("No output has been returned from this rule!")
+  raise CS27Exceptions.NoResult("No results have been returned from this rule!")
