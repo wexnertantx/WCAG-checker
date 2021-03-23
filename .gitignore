@@ -1,5 +1,6 @@
 # Custom ignores
 _result/
+_tmp/
 drivers/
 logs/
 *.png

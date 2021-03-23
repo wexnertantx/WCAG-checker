@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 import sys, getopt, importlib, re, traceback
-import drivers
 
 from os import listdir
 from os.path import isdir, isfile, join
 from selenium.common import exceptions as SeleniumExceptions
+
 # Custom imports
+import drivers
 from util.print import *
+import util.errors as CS27Exceptions
 
 LOCAL_RULES_PATH = "rules/local"
 EXTERNAL_RULES_PATH = "rules/external"
@@ -43,14 +45,13 @@ def run_rules(driver_name, website):
     for module in imported_modules:
       try:
         print_info(f"\nRunning {module.NAME} v{module.VERSION} accessibility rule on '{website}'")
-        try:
-          result_percentage,result_string = module.run(driver)
-          print_results(result_percentage,result_string)
-        except Exception as err:
-          print("No output for this module")
+        result_percentage, result_string = module.run(driver)
+        print_results(result_percentage, result_string)
+      except CS27Exceptions.NoOutput as err:
+        print_error(err)
       except Exception as err:
         print_begin_color('bright_red')
-        print(f"Uncaught error detected in rule {module.NAME}")
+        print(f"Leaked error detected in rule {module.NAME}")
         print("Make sure you catch all the exceptions inside the rule itself}\n")
         traceback.print_exc(file=sys.stdout)
         print_end_color()
