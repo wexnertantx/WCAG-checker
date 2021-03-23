@@ -1,69 +1,85 @@
-import time
+from os import path
+import time, re
+
+# Selenium imports
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-import os
+
+# Spacy imports
 import spacy
+from spacy.language import Language
 from spacy_langdetect import LanguageDetector
 from spacy.pipeline import Sentencizer
 from spacy.lang.xx import MultiLanguage
 from subprocess import check_output
 
+# Custom imports
+import util.errors as CS27Exceptions
+from util.print import *
 
 NAME = "Language of Page"
 DESCRIPTION = """The human language of each passage or phrase in the content can be programmatically determined except for proper names, technical terms, words of indeterminate language, and words or phrases that have become part of the vernacular of the immediately surrounding text."""
 LINK = "https://www.w3.org/WAI/WCAG21/Understanding/language-of-page.html"
 VERSION = 1
+SCRIPT_DIR = path.dirname(path.realpath(__file__))
+SKIP = True
 
-'''
-def format_css_selector(driver, element):
-    elem_tag = driver.execute_script("return arguments[0].tagName.toLowerCase();", element)
-    elem_class = f".{element.get_attribute('class')}" if (element.get_attribute('class') != '') else ''
-    elem_id = f"#{element.get_attribute('id')}" if (element.get_attribute('id') != '') else ''
-    return f"{elem_tag}{elem_id}{elem_class}"
-'''
-    
+@Language.factory("language_detector")
+def create_language_detector(nlp, name):
+  return LanguageDetector(language_detection_function=None)
+
 def run(driver):
-    cmd='python -m spacy download xx_ent_wiki_sm'
-    check_output(cmd,shell=True).decode()
-    #load multi language (xx) and create pipelines, sentencizer for sentence boundaries
-    nlp = spacy.load("xx_ent_wiki_sm")
-    nlp.add_pipe(nlp.create_pipe("sentencizer"))
-    nlp.add_pipe(LanguageDetector(), name='language_detector', last=True)
-    
-    print(f"Printing title from {NAME}: {driver.title}")
-    WebDriverWait(driver, 10)
-    time.sleep(2)
-    
-    #get html code, extract language element for cross checking
-    html_tag = driver.find_elements(By.TAG_NAME, "html")
-    lang = html_tag[0].get_attribute("lang")
-    #get <p> texts
-    ptext = driver.find_elements_by_tag_name('p')
-    total_sentence_count, matching_sentence_count = 0, 0
-    #strip all white spaces and use NLP to recognise text and language off 
-    # wordbank, compare with html lang tag with score comparison
-    #A LITTLE BUGGY WITH BAD HTML CODES
-    if len(lang):
+  if (SKIP):
+    raise CS27Exceptions.NoResult("This rule is flagged to be skipped, check the SKIP flag in your rule!")
+  
+  try:
+    output = check_output('spacy download xx_ent_wiki_sm', shell=True).decode()
+    print_end_color()
 
-        print("Detected <lang> tag: ", lang)
+    results_percentage = None
 
-        for p in ptext:
-            total_sentence_count = total_sentence_count+1
-            #print(total_sentence_count)
-            p.text.strip()
-            #print(p.text)
-            txt = nlp(p.text)
-            langscore = txt._.language
-            lan = langscore.get('language')
-            #print(langscore)
-            if (lan is not lang) and (langscore.get('score')<0.7):
-                print("Text \""+p.text+"\" is not of proper sentence or is of another language.")
-                print(langscore)
-            else:
-                matching_sentence_count = matching_sentence_count+1
-        match_percentage = ((matching_sentence_count / total_sentence_count)*100)
-        #print("%.2f%% of the page matches <lang> tag" %(match_percentage))
-        return "{:.2f}".format(match_percentage),"% of the page matches <lang> tag"
+    # Load multi language (xx) and create pipelines, sentencizer for sentence boundaries
+    nlp = spacy.load('xx_ent_wiki_sm')
+    nlp.add_pipe('sentencizer')
+    nlp.add_pipe('language_detector', last=True)
+    
+    html = driver.find_elements(By.TAG_NAME, "html")
+    properties = {
+      'lang': html[0].get_attribute("lang")
+    }
+
+    page_text_elements = re.findall(r"[\s]*(<.*>)(.+)(<.*>)", driver.page_source)
+    lang_results = {
+      'fail': [],
+      'success': [],
+    }
+
+    if len(properties['lang']):
+      for text_element in page_text_elements:
+        nlp_text = nlp(text_element[1].strip())
+        lang_data = nlp_text._.language
+        lang = lang_data.get('language')
+        score = lang_data.get('score')
+        if (lang != properties['lang'] or score < 0.7):
+          if (lang != properties['lang']):
+            print_error(f"'{''.join(text_element)}' with language ({lang}) failed to match the page language ({properties['lang']})")
+          else:
+            print_error(f"'{''.join(text_element)}' failed to match the page language ({properties['lang']}) with a score of {score}")
+        else:
+          lang_results['success'].append(text_element)
+
+      success_count = len(lang_results['success'])
+      fail_count = len(lang_results['fail'])
+      text_count = len(page_text_elements)
+
+      results_percentage = (success_count/text_count)
+
+      if (results_percentage != None):
+        return results_percentage * 100, f"% of the page matches the lang attribute \"{properties['lang']}\""
     else:
-        #print("Page has no <lang> attribute")
-        return -1,"Page has no <lang> attribute"
+      return -1, "Page has no lang attribute within the <html> tag"
+    
+  except Exception as err:
+    print_error(f"[Error] {NAME} rule failed execution:", err, '\n')
+  else:
+    raise CS27Exceptions.NoResult("No results have been returned from this rule!")

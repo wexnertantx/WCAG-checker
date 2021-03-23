@@ -129,5 +129,5 @@ def run(driver):
 
   except Exception as err:
     print_error(f"[Error] {NAME} rule failed execution:", err, '\n')
-
-  raise CS27Exceptions.NoResult("No results have been returned from this rule!")
+  else:
+    raise CS27Exceptions.NoResult("No results have been returned from this rule!")

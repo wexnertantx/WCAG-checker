@@ -19,7 +19,7 @@ DESCRIPTION = """If any audio on a Web page plays automatically for more than 3 
 LINK = "https://www.w3.org/TR/WCAG21/#headings-and-labels"
 VERSION = 1
 SCRIPT_DIR = path.dirname(path.realpath(__file__))
-SKIP = False
+SKIP = True
 
 ###
 # Amount of parent levels to look through to find custom media controls, default 2
@@ -34,8 +34,8 @@ CONTROLS_PARENT_LIMIT = 2
 
 def run(driver):
   if (SKIP):
-    raise CS27Exceptions.NoOutput("This rule is flagged to be skipped, check the SKIP flag in your rule!")
-    
+    raise CS27Exceptions.NoResult("This rule is flagged to be skipped, check the SKIP flag in your rule!")
+
   time.sleep(2)
 
   try:
@@ -131,5 +131,5 @@ def run(driver):
 
   except Exception as err:
     print_error(f"[Error] {NAME} rule failed execution:", err, '\n')
-
-  raise CS27Exceptions.NoResult("No results have been returned from this rule!")
+  else:
+    raise CS27Exceptions.NoResult("No results have been returned from this rule!")
