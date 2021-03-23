@@ -96,7 +96,7 @@ def run(driver):
       if (results_percentage != None):
         return results_percentage * 100, "% of the headers match their immediate content"
     else:
-      return -1, "Page has no header tags"
+      return None, "Page has no header tags"
   
   except Exception as err:
     print_error(f"[Error] {NAME} rule failed execution:", err, '\n')

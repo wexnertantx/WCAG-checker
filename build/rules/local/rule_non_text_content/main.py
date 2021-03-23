@@ -127,7 +127,7 @@ def run(driver):
       if (len(results_percentage)):
         return (sum(results_percentage) / len(results_percentage)) * 100, "% of the page's image content is correct"
     else:
-      return -1, "Page has no images"
+      return None, "Page has no images"
 
   except Exception as err:
     print_error(f"[Error] {NAME} rule failed execution:", err, '\n')

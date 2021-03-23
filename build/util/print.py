@@ -78,9 +78,11 @@ def print_help():
   sys.exit()
 
 def print_results(percent, modstr):
+  if percent == None:
+    return print_error(modstr)
+
   if float(percent) > 50:
     print_success("{:.2f}{:s}".format(percent, modstr))
   elif float(percent < 50):
     print_error("{:.2f}{:s}".format(percent, modstr))
-  elif percent == -1:
-    print_error(modstr)
+    

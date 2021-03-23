@@ -93,7 +93,7 @@ def run(driver):
         if (properties['autoplay'] != None):
           media_autoplay.append(properties)
     else:
-      return -1, "Page has no media"
+      return None, "Page has no media"
 
     if (len(media_autoplay)):
       for element in media_autoplay:

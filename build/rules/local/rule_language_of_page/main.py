@@ -48,36 +48,37 @@ def run(driver):
       'lang': html[0].get_attribute("lang")
     }
 
-    page_text_elements = re.findall(r"[\s]*(<.*>)(.+)(<.*>)", driver.page_source)
+    page_text = html[0].text.split('\n')
     lang_results = {
       'fail': [],
       'success': [],
     }
 
     if len(properties['lang']):
-      for text_element in page_text_elements:
-        nlp_text = nlp(text_element[1].strip())
+      for text in page_text:
+        if (len(text) == 0):
+          continue
+
+        nlp_text = nlp(text)
         lang_data = nlp_text._.language
         lang = lang_data.get('language')
         score = lang_data.get('score')
-        if (lang != properties['lang'] or score < 0.7):
-          if (lang != properties['lang']):
-            print_error(f"'{''.join(text_element)}' with language ({lang}) failed to match the page language ({properties['lang']})")
-          else:
-            print_error(f"'{''.join(text_element)}' failed to match the page language ({properties['lang']}) with a score of {score}")
+        if lang != properties['lang']:
+          lang_results['fail'].append(text)
+          print_error(f"'{text}' with language ({lang}) failed to match the page language ({properties['lang']})")
         else:
-          lang_results['success'].append(text_element)
+          lang_results['success'].append(text)
 
       success_count = len(lang_results['success'])
       fail_count = len(lang_results['fail'])
-      text_count = len(page_text_elements)
+      text_count = len(page_text)
 
       results_percentage = (success_count/text_count)
 
       if (results_percentage != None):
         return results_percentage * 100, f"% of the page matches the lang attribute \"{properties['lang']}\""
     else:
-      return -1, "Page has no lang attribute within the <html> tag"
+      return None, "Page has no lang attribute within the <html> tag"
     
   except Exception as err:
     print_error(f"[Error] {NAME} rule failed execution:", err, '\n')
