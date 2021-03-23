@@ -6,6 +6,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from google.cloud import vision
 
+import util.format
+
 NAME = "Non-text Content"
 DESCRIPTION = """All non-text content that is presented to the user has a text alternative
                   that serves the equivalent purpose, except for certain situations"""
@@ -15,16 +17,6 @@ SCRIPT_DIR = path.dirname(path.realpath(__file__))
 
 # Set env for google API credentials
 environ["GOOGLE_APPLICATION_CREDENTIALS"] = path.join(getcwd(), "credentials", "google_api.json")
-
-###
-# Returns the element CSS selector as <tag><id><class> format
-# @param element      - Selenium WebDriver WebElement
-###
-def format_css_selector(driver, element):
-  elem_tag = driver.execute_script("return arguments[0].tagName.toLowerCase();", element)
-  elem_class = f".{element.get_attribute('class')}" if (element.get_attribute('class') != '') else ''
-  elem_id = f"#{element.get_attribute('id')}" if (element.get_attribute('id') != '') else ''
-  return f"{elem_tag}{elem_id}{elem_class}"
 
 def run(driver):
   print(f"Printing title from {NAME}: {driver.title}")
