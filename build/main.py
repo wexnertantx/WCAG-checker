@@ -47,7 +47,7 @@ def run_rules(driver_name, website):
         print_info(f"\nRunning {module.NAME} v{module.VERSION} accessibility rule on '{website}'")
         result_percentage, result_string = module.run(driver)
         print_results(result_percentage, result_string)
-      except CS27Exceptions.NoOutput as err:
+      except CS27Exceptions.NoResult as err:
         print_error(err)
       except Exception as err:
         print_begin_color('bright_red')

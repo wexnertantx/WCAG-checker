@@ -1,2 +1,2 @@
-class NoOutput(Exception):
+class NoResult(Exception):
   pass
