@@ -1,0 +1,2 @@
+class NoOutput(Exception):
+  pass
