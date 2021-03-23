@@ -1,0 +1,1 @@
+logo:icon,facebook,google,twitter,social media

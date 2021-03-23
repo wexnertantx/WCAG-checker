@@ -1,155 +1,136 @@
+from os import path, mkdir
+from shutil import rmtree
 import time
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
+
 import imagehash
 from PIL import Image
-import os
 
+# Selenium imports
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+
+# Custom imports
+import util.errors as CS27Exceptions
+from util.print import *
+import util.format as CS27Format
 
 NAME = "Audio Control"
 DESCRIPTION = """If any audio on a Web page plays automatically for more than 3 seconds, either a mechanism is available to pause or stop the audio, or a mechanism is available to control audio volume independently from the overall system volume level."""
 LINK = "https://www.w3.org/TR/WCAG21/#headings-and-labels"
 VERSION = 1
+SCRIPT_DIR = path.dirname(path.realpath(__file__))
+SKIP = False
 
+###
+# Amount of parent levels to look through to find custom media controls, default 2
+#   <div>
+#     <div>
+#        <video></video>
+#     </div>
+#    <div class="controls"></div>          <-- Custom video controls will be found here
+#   </div>
+###
+CONTROLS_PARENT_LIMIT = 2
 
 def run(driver):
-    print(f"Printing title from {NAME}: {driver.title}")
-    WebDriverWait(driver, 10)
-    time.sleep(2)
+  if (SKIP):
+    raise CS27Exceptions.NoResult("This rule is flagged to be skipped, check the SKIP flag in your rule!")
 
-    videos = driver.find_elements(By.TAG_NAME, "video")
-    audios = driver.find_elements(By.TAG_NAME, "audio")
+  time.sleep(2)
 
-    print(len(videos))
-    print(audios)
-    VACounter = 0
-    VCCounter = 0
-    AACounter = 0
-    ACCounter = 0
-    
-    
-    #Check videos for attributes
-    print("\n####--Video Section--####")
-    if len(videos):
-        print("\n---Video Autoplay---")
-        for video in videos:
-            properties = {
-                "class": f".{video.get_attribute('class')}" if (video.get_attribute('class') != '') else '',
-                "id": f"#{video.get_attribute('id')}" if (video.get_attribute('id') != '') else '',
-                "autoplay": video.get_attribute('autoplay'),
-            }
-            css_selector = f"media{properties['id']}{properties['class']}"
+  try:
+    tmp_folder = path.join(SCRIPT_DIR, "_tmp")
+    if (not path.exists(tmp_folder)):
+      mkdir(tmp_folder, mode=0o777)
 
-            if properties['autoplay'] == 'None':
-                print (properties['autoplay'])
-                print(f"<Video Element>: --{css_selector}-- does not have autoplay enabled")
-            else:
-                first = "vid1.png"
-                second = "vid2.png"
-                location = video.location
-                size = video.size
-                driver.save_screenshot(first)
-                x = location['x']
-                y = location['y']
-                width = location['x']+size['width']
-                height = location['y']+size['height']
-                im = Image.open(first)
-                im = im.crop((int(x), int(y), int(width), int(height)))
-                vidstarthash = imagehash.average_hash(im)
-                time.sleep(4)
-                driver.save_screenshot(second)
-                im = Image.open(second)
-                im = im.crop((int(x), int(y), int(width), int(height)))
-                videndhash = imagehash.average_hash(im)
+    results_percentage = None
 
-                if (vidstarthash != videndhash):
-                    VACounter += 1
-                    print(f"<Video Element> == {css_selector}-- has autoplay enabled")
-                else:
-                    print(f"<Video Element> -- {css_selector}-- does not have autoplay enabled")
+    audio = driver.find_elements(By.TAG_NAME, "audio")
+    video = driver.find_elements(By.TAG_NAME, "video")
+    media = audio + video
 
-                remove_files(first, second)
-        print("Total video elements with autoplay: " + str(VACounter))
-        print("Total video elements without autoplay: " + str(len(videos) - VACounter))
-                
-                
-        #Check for Video Contols
-        print("\n---Video Control---")
-        for video in videos:
-            properties = {
-                "class": f".{video.get_attribute('class')}" if (video.get_attribute('class') != '') else '',
-                "id": f"#{video.get_attribute('id')}" if (video.get_attribute('id') != '') else '',
-                "controls": video.get_attribute('controls'),
-            }
-            css_selector = f"video{properties['id']}{properties['class']}"
-            
-            if properties["controls"] != None:
-                VCCounter += 1
-                print(f"<Video Element>: --{css_selector}-- has control attribute")
-            else:
-                print(f"<Video Element>: --{css_selector}-- has no control attribute")
-        print("Total video elements with controls: " + str(VCCounter))
-        print("Total video elements without controls: " + str(len(videos) - VCCounter))
-  
+    media_autoplay = []
+    media_control = {
+      'fail': [],
+      'success': [],
+    }
 
+    if (len(media)):
+      for element in media:
+        properties = {
+          "self": element,
+          "tag": driver.execute_script("return arguments[0].tagName.toLowerCase();", element),
+          "autoplay": element.get_attribute('autoplay'),
+          "controls": element.get_attribute('controls'),
+        }
+
+        # If video does not have autoplay specified, hard check using video frames
+        if (properties['autoplay'] == 'None' and properties['tag'] == 'video'):
+          first = path.join(tmp_folder, "video-1.png")
+          second = path.join(tmp_folder, "video-2.png")
+          location = element.location
+          size = element.size
+          x = location['x']
+          y = location['y']
+          width = location['x'] + size['width']
+          height = location['y'] + size['height']
+
+          # Save two screenshots with a 4-second interval
+          driver.save_screenshot(first)
+          im = Image.open(first)
+          im = im.crop((int(x), int(y), int(width), int(height)))
+          start_hash = imagehash.average_hash(im)
+          time.sleep(4)
+          driver.save_screenshot(second)
+          im = Image.open(second)
+          im = im.crop((int(x), int(y), int(width), int(height)))
+          end_hash = imagehash.average_hash(im)
+
+          # If the screenshots differ, the video is automatically playing
+          if (start_hash != end_hash):
+            properties['autoplay'] = True
+
+        if (properties['autoplay'] != None):
+          media_autoplay.append(properties)
     else:
-        print("No video elements found on page")
-    
-    
-    #check audios for attributes
-    print("\n####--Audio Section--####")
-    if len(audios):
-    
-        #Check for audio autoplay
-        print("\n---Audio Autoplay---")
-        for audio in audios:
-            properties = {
-                "class": f".{audio.get_attribute('class')}" if (audio.get_attribute('class') != '') else '',
-                "id": f"#{audio.get_attribute('id')}" if (audio.get_attribute('id') != '') else '',
-                "autoplay": audio.get_attribute('autoplay'),
-            }
-            css_selector = f"audio{properties['id']}{properties['class']}"
-            
-            if properties["autoplay"] is None:
-                print(f"<Audio Element>: --{css_selector}-- has autoplay disabled")
-            else:
-                AACounter += 1
-                print(f"<Audio Element>: --{css_selector}-- has autoplay enabled")
-                
-        print("\n---Audio Control---")
-        
-        for audio in audios:
-            properties = {
-                "class": f".{audio.get_attribute('class')}" if (audio.get_attribute('class') != '') else '',
-                "id": f"#{audio.get_attribute('id')}" if (audio.get_attribute('id') != '') else '',
-                "controls": audio.get_attribute('controls'),
-            }
-            css_selector = f"audio{properties['id']}{properties['class']}"
-            
-            if properties["controls"] != None:
-                ACCounter += 1
-                print(f"<Audio Element>: --{css_selector}-- has control attribute")
-            else:
-                print(f"<Audio Element>: --{css_selector}-- has no control attribute")
-        print("Total audio elements with controls: " + str(ACCounter))
-        print("Total audio elements without controls: " + str(len(audios) - ACCounter))
-    else:
-        print("No audio elements found on the page")
-        
+      return None, "Page has no media"
 
-    #Summary output
-    print("\n####--Summary of Rule--####")
-    print("Total rule failures: " + str(VACounter + VCCounter + AACounter + ACCounter))
-    print("See above for details.")
+    if (len(media_autoplay)):
+      for element in media_autoplay:
+        parent = element['self']
+        found = True if (element['controls'] != None) else False
+        level = 0
+        while (found == False and level < CONTROLS_PARENT_LIMIT):
+          parent = driver.execute_script("return arguments[0].parentNode;", parent)
+          controls = list(filter(
+            lambda c: (driver.execute_script("return arguments[0].tagName.toLowerCase();", c) != element['tag']), # Exclude self
+            parent.find_elements(By.XPATH, ".//*[contains(@role, 'button') or contains(translate(@class,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), 'control')] | .//button")
+          ))
+
+          # Break out of the loop when controls have been found
+          if (len(controls)):
+            found = True
+          else:
+            level += 1
+
+        if (found):
+          media_control['success'].append(element)
+        else:
+          media_control['fail'].append(element)
+          print_error(f"'{CS27Format.css_selector(driver, element['self'])}' has autoplay enabled but no controls could be found!")
+
+    if (path.exists(tmp_folder)):
+      rmtree(tmp_folder)
+
+    success_count = len(media_control['success'])
+    fail_count = len(media_control['fail'])
+    autoplay_count = len(media_autoplay)
+
+    results_percentage = (success_count/autoplay_count)
+
+    if (results_percentage != None):
+      return results_percentage * 100, "% of the media that have autoplay enabled have controls as well"
+
+  except Exception as err:
+    print_error(f"[Error] {NAME} rule failed execution:", err, '\n')
     
-
-
-    
-
-
-def remove_files(firstimg, secimg):
-    if os.path.exists(firstimg):
-        os.remove(firstimg)
-    if os.path.exists(secimg):
-        os.remove(secimg)
-    print("Removed created files....")
