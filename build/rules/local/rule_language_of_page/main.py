@@ -47,10 +47,13 @@ def run(driver):
         if (len(text) == 0):
           continue
 
-        lang_score = detectlanguage.detect(text)[0]
-        lang = lang_score['language']
-        reliable = lang_score['isReliable']
-        confidence = lang_score['confidence']
+        lang_score = detectlanguage.detect(text)
+        if (len(lang_score) == 0):
+          continue
+
+        lang = lang_score[0]['language']
+        reliable = lang_score[0]['isReliable']
+        confidence = lang_score[0]['confidence']
         if (lang == properties['lang'] and reliable == True and confidence > 2.5):
           lang_results['success'].append(text)
         else:
