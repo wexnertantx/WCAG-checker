@@ -98,7 +98,7 @@ def download_drivers(driver_name):
     archive_file, header = request.urlretrieve(f'https://chromedriver.storage.googleapis.com/{version}/{archive_name}.{archive_ext}')
   elif (driver_name == 'firefox'):
     platforms = {
-      "Windows": "win32",
+      "Windows": "win64",
       "Linux": "linux64",
       "Darwin": "macos",
     }

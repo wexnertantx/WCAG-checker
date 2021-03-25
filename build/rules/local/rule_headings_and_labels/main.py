@@ -46,7 +46,7 @@ def run(driver):
     results_percentage = None
 
     nlp = spacy.load("en_core_web_lg")
-    header_elements = driver.find_elements(By.XPATH, './/*[substring-after(name(), "h") > 0]')
+    header_elements = driver.find_elements(By.XPATH, '//h1|//h2|//h3|//h4|//h5|//h6')
     header_content = {
       'fail': [],
       'success': [],
