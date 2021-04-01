@@ -1,0 +1,7 @@
+@import './mixins';
+
+@include font-face('Open-Sans', 'assets/fonts/Open Sans/OpenSans-Light', 300, normal, ttf);
+@include font-face('Open-Sans', 'assets/fonts/Open Sans/OpenSans-Regular', 400, normal, ttf);
+@include font-face('Open-Sans', 'assets/fonts/Open Sans/OpenSans-SemiBold', 600, normal, ttf);
+@include font-face('Open-Sans', 'assets/fonts/Open Sans/OpenSans-Bold', 700, normal, ttf);
+@include font-face('Open-Sans', 'assets/fonts/Open Sans/OpenSans-ExtraBold', 800, normal, ttf);

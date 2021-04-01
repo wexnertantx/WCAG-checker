@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys, getopt, importlib, re, traceback
+import sys, getopt, importlib, re, traceback, eel
 
 from os import listdir
 from os.path import isdir, isfile, join
@@ -34,6 +34,7 @@ def import_all_external_rules():
   # clone the repo into the external folder and import the module into imported_modules
   pass
 
+@eel.expose
 def run_rules(driver_name, website):
   driver = None
   try:
@@ -71,21 +72,30 @@ def run_rules(driver_name, website):
     driver.close()
 
 
+def eel_close(route, websockets):
+  if not websockets:
+    print('Shutting down the GUI!')
+    sys.exit(0)
+
 def main(argv):
   try:
-    opts, args = getopt.getopt(argv, "hd:", ["driver="])
+    opts, args = getopt.getopt(argv, "hd:", ["gui", "driver="])
   except getopt.GetoptError:
     print_help()
     sys.exit(2)
   
   driver = 'chrome'
+  in_gui = False
   for opt, arg in opts:
+    if opt == '--gui':
+      in_gui = True
+      break
     if opt == '-h':
       print_help()
     elif opt in ('-d', '--driver'):
       driver = arg
 
-  if len(args) == 0:
+  if len(args) == 0 and not in_gui:
     print_help()
   
   # Import all rules
@@ -93,6 +103,10 @@ def main(argv):
   import_all_external_rules()
 
   # Run all rules
-  run_rules(driver, args[0])
+  if not in_gui:
+    run_rules(driver, args[0])
+  else:
+    eel.init('ui/dist')
+    eel.start('index.html', port=8123, close_callback=eel_close)
 
 main(sys.argv[1:])

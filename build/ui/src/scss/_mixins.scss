@@ -1,0 +1,63 @@
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg, $display: null, $version: null) {
+	$src: null;
+	$extmods: (
+		eot: "?",
+		svg: "#" + str-replace($name, " ", "_")
+	);
+	$formats: (
+		otf: "opentype",
+		ttf: "truetype"
+	);
+	@each $ext in $exts {
+		$extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+		$format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+		$version: if($version == null, "", "?" + $version);
+		$src: append($src, url(quote($path + "." + $extmod + $version)) format(quote($format)), comma);
+	}
+	@font-face {
+		font-family: quote($name);
+		font-style: $style;
+		font-weight: $weight;
+		font-display: if($display == null, "initial", $display);
+		src: $src;
+	}
+}
+
+@mixin transition($properties, $duration: 0.4s, $easing: ease, $delay: 0) {
+  transition-property: unquote($properties);
+  transition-duration: $duration;
+  transition-timing-function: $easing;
+  transition-delay: $delay;
+}
+
+@mixin disable-select() {
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */
+}
+
+@mixin placeholder($color) {
+  color: $color;
+	font-size: 0.9em;
+	font-weight: 600;
+	opacity: .5;
+}
+
+@mixin set-placeholder($color: $apricot) {
+	&::-webkit-input-placeholder {
+		@include placeholder($color);
+	}
+	&::-moz-placeholder {
+	  @include placeholder($color);
+	}
+	&:-ms-input-placeholder {
+	  @include placeholder($color);
+	}
+	&:-moz-placeholder {
+	  @include placeholder($color);
+	}
+	&:placeholder-shown {
+		text-shadow: none !important;
+	}
+}
