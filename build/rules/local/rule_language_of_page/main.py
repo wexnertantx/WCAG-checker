@@ -1,5 +1,5 @@
 from os import path
-import time, re, json
+import time, re, json, eel
 
 # Selenium imports
 from selenium.webdriver.common.by import By
@@ -15,11 +15,12 @@ detectlanguage.configuration.api_key = "3af1a02a97678b5ab470959a24481d25"
 import util.errors as CS27Exceptions
 from util.print import *
 
+SCRIPT_DIR = path.dirname(path.realpath(__file__))
+ID = SCRIPT_DIR.split('\\')[-1]
 NAME = "Language of Page"
 DESCRIPTION = """The human language of each passage or phrase in the content can be programmatically determined except for proper names, technical terms, words of indeterminate language, and words or phrases that have become part of the vernacular of the immediately surrounding text."""
 LINK = "https://www.w3.org/WAI/WCAG21/Understanding/language-of-page.html"
 VERSION = 1
-SCRIPT_DIR = path.dirname(path.realpath(__file__))
 SKIP = False
 
 def run(driver):
@@ -56,14 +57,18 @@ def run(driver):
         confidence = lang_score[0]['confidence']
         if (lang == properties['lang'] and reliable == True and confidence > 2.5):
           lang_results['success'].append(text)
+          eel.add_result_to_rule_js(ID, 'success', f"'{text}' matches the page language ({lang})")
         else:
           lang_results['fail'].append(text)
+          result_string = None
           if (lang == properties['lang'] and confidence <= 2.5):
-            print_error(f"'{text}' matches the page language ({lang}) but has a low confidence score of {confidence}")
+            result_string = f"'{text}' matches the page language ({lang}) but has a low confidence score of {confidence}"
           elif (lang == properties['lang'] and reliable == True):
-            print_error(f"'{text}' matches the page language ({lang}) but the result is unreliable")
+            result_string = f"'{text}' matches the page language ({lang}) but the result is unreliable"
           else:
-            print_error(f"'{text}' with language ({lang}) failed to match the page language ({properties['lang']})")
+            result_string = f"'{text}' with language ({lang}) failed to match the page language ({properties['lang']})"
+          print_error(result_string)
+          eel.add_result_to_rule_js(ID, 'fail', result_string)
 
       success_count = len(lang_results['success'])
       fail_count = len(lang_results['fail'])

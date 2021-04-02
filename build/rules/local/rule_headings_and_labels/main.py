@@ -1,6 +1,6 @@
 from os import path
 from bs4 import BeautifulSoup
-import time, re
+import time, re, eel
 import spacy
 from subprocess import check_output
 
@@ -12,11 +12,12 @@ import util.errors as CS27Exceptions
 from util.print import *
 import util.format as CS27Format
 
+SCRIPT_DIR = path.dirname(path.realpath(__file__))
+ID = SCRIPT_DIR.split('\\')[-1]
 NAME = "Headings and Labels"
 DESCRIPTION = """Headings and labels describe topic or purpose."""
 LINK = "https://www.w3.org/TR/WCAG21/#headings-and-labels"
 VERSION = 1
-SCRIPT_DIR = path.dirname(path.realpath(__file__))
 SKIP = False
 
 ###
@@ -68,9 +69,11 @@ def run(driver):
           continue
 
         sibling_text_lines = sibling.text.split('\n')
+        element_css = CS27Format.css_selector(driver, header)
         if (len(sibling_text_lines[0]) == 0):
           header_content['fail'].append(header)
-          print_error(f"Header {CS27Format.css_selector(driver, header)} does not have any content: \"{header.text}\"")
+          print_error(f'Header {element_css} does not have any content: "{header.text}"')
+          eel.add_result_to_rule_js(ID, 'fail', f'Header {element_css} does not have any content: "{header.text}"')
           continue
 
         level = 0
@@ -88,9 +91,11 @@ def run(driver):
 
         if (found):
           header_content['success'].append(header)
+          eel.add_result_to_rule_js(ID, 'success', f'Header {element_css} is descriptive enough to match the content: "{header.text}"')
         else:
           header_content['fail'].append(header)
-          print_error(f"Header {CS27Format.css_selector(driver, header)} not descriptive enough in comparison to content: \"{header.text}\"")
+          print_error(f'Header {element_css} not descriptive enough in comparison to content: "{header.text}"')
+          eel.add_result_to_rule_js(ID, 'fail', f'Header {element_css} not descriptive enough in comparison to content: "{header.text}"')
       
       success_count = len(header_content['success'])
       fail_count = len(header_content['fail'])

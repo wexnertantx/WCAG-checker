@@ -1,11 +1,11 @@
 <template>
-  <div v-if="isCondition" class="button-vue" v-tooltip="{ ...tooltip }">
+  <div class="button-vue" v-tooltip="{ ...tooltip }">
     <router-link v-if="href" :to="href" class="button" :class="[ getName, getStyle, isActive ]">
       <Icon v-if="icon" :name="icon"></Icon>
       <span v-if="getText || $slots.default" class="text"><slot>{{ getText }}</slot></span>
     </router-link>
-    <div v-else class="button" :class="[ getName, getStyle, isDisabled, isActive ]" @click.capture="OnButtonClick">
-      <Icon v-if="icon" :name="isPending"></Icon>
+    <div v-else class="button" :class="[ getName, getStyle, isDisabled, isActive, { 'pending': isPending } ]" @click.capture="OnButtonClick">
+      <Icon v-if="icon" :name="getIcon"></Icon>
       <span v-if="getText || $slots.default" class="text"><slot>{{ getText }}</slot></span>
     </div>
     <Dropdown
@@ -24,7 +24,7 @@ import Icon from './Icon.component';
 export default {
   name: 'VUEButton',
   components: { Icon, Dropdown },
-  props: ['name', 'href', 'type', 'icon', 'text', 'click', 'disabled', 'active', 'pending', 'condition', 'tooltip', 'dropdown'],
+  props: ['name', 'href', 'type', 'icon', 'text', 'click', 'disabled', 'active', 'pending', 'tooltip', 'dropdown'],
   emits: ['update:dropdown'],
   data() {
     return {
@@ -45,6 +45,9 @@ export default {
     getStyle() {
       return (this.type) ? `${this.type}-style` : null;
     },
+    getIcon() {
+      return (this.isPending) ? 'spinner' : this.icon;
+    },
     isActive() {
       return (this._dropdown?.visible || this.$route.path.slice(1) === this.href) ? 'active' : false;
     },
@@ -52,11 +55,7 @@ export default {
       return (this.disabled) ? 'disabled' : null;
     },
     isPending() {
-      return (this.pending) ? 'spinner-quad' : this.icon;
-    },
-    isCondition() {
-      if (typeof (this.condition) !== 'function') return true;
-      return this.condition();
+      return this.pending;
     },
   },
   methods: {
@@ -86,6 +85,7 @@ export default {
 .button-vue {
   display: flex;
   position: relative;
+  flex-direction: column;
   .button {
     flex: 1;
     position: relative;
@@ -93,7 +93,7 @@ export default {
     align-items: center;
     justify-content: center;
     color: black;
-    font-weight: 600;
+    font-weight: 300;
     white-space: nowrap;
     cursor: pointer;
     .text {
@@ -113,6 +113,67 @@ export default {
       opacity: .4;
     }
     @include disable-select();
+  }
+
+  .icon-style {
+    color: rgba($col-text, .6);
+    @include transition('color', .4s, ease);
+    &:not(.disabled):not(.pending) {
+      &.is-active, &:hover {
+        color: $col-text;
+      }
+    }
+  }
+
+  .menu-style {
+    justify-content: flex-start;
+    padding: 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: rgba($col-text, .6);
+    @include transition('background-color, padding-left', .2s, ease);
+    .text:nth-child(2) { margin-left: 15px; }
+    .icon-vue {
+      font-size: 20px;
+      opacity: .4;
+    }
+    &:not(.disabled):not(.pending) {
+      &:hover {
+        background-color: rgba(black, .25);
+        padding-left: 30px;
+      }
+      &.is-active, &.router-link-exact-active {
+        font-weight: 600;
+        color: $col-text-def;
+      }
+    }
+  }
+
+  .menu-sub-style {
+    justify-content: flex-start;
+    padding: 5px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: rgba($col-text, .6);
+    @include transition('background-color, padding-left', .2s, ease);
+    .text:nth-child(2) { margin-left: 15px; }
+    .icon-vue {
+      font-size: 20px;
+      opacity: .4;
+    }
+    &:not(.disabled):not(.pending) {
+      &:hover {
+        background-color: rgba(black, .25);
+        padding-left: 30px;
+      }
+      &.is-active, &.router-link-exact-active {
+        font-weight: 600;
+        color: $col-text-def;
+      }
+    }
+
+    &.red { color: #FF6347; }
+    &.green { color: #C8F902; }
   }
 
   .bzard-style {
@@ -222,21 +283,6 @@ export default {
       background-color: lighten($dark-apricot, 10%);
       color: lighten($apricot, 20%);
       .text { padding-left: 5px; }
-    }
-  }
-
-  .menu-style {
-    flex: 1;
-    align-self: stretch;
-    padding: 10px;
-    border-radius: 4px;
-    color: $apricot;
-    font-weight: 600;
-    .text { flex: 1; }
-    @include transition('color, background-color', .2s, ease);
-    &:not(.disabled) {
-      &.active, &:hover { color: lighten($apricot, 20%); }
-      &.active { background-color: rgba($apricot, .4); }
     }
   }
 }

@@ -45,4 +45,16 @@ export default {
 .icon-arrow_right:before { content: $icon-arrow_right; }
 .icon-settings:before { content: $icon-settings; }
 .icon-power-off:before { content: $icon-power-off; }
+.icon-refresh:before { content: $icon-refresh; }
+.icon-pause:before { content: $icon-pause; }
+.icon-stop:before { content: $icon-stop; }
+.icon-play:before { content: $icon-play; }
+.icon-spinner:before {
+  content: $icon-spinner;
+  animation: spin 1s linear infinite;
+}
+.icon-calendar-check:before { content: $icon-calendar-check; }
+.icon-home:before { content: $icon-home; }
+.icon-cancel-circle:before { content: $icon-cancel-circle; }
+.icon-check-circle:before { content: $icon-check-circle; }
 </style>

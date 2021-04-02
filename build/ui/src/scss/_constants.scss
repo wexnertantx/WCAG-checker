@@ -1,4 +1,6 @@
 // Colors
+$col-text: #f5f5f5;
+$col-text-def: rgba($col-text, .9);
 $col-bg: #3D428B;
 $col-dblue: #023047;
 $col-blue: #219EBC;
@@ -17,3 +19,12 @@ $error: #FF6347;
 $icon-arrow_right: "\e900";
 $icon-settings: "\e901";
 $icon-power-off: "\e902";
+$icon-pause: "\e903";
+$icon-stop: "\e904";
+$icon-play: "\e905";
+$icon-refresh: "\e906";
+$icon-spinner: "\e907";
+$icon-home: "\e908";
+$icon-calendar-check: "\e909";
+$icon-cancel-circle: "\e90c";
+$icon-check-circle: "\e90a";

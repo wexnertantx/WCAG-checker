@@ -1,4 +1,4 @@
-import sys, re
+import sys, re, eel
 from os import environ, getcwd, path, mkdir
 from shutil import rmtree
 from urllib.request import urlretrieve
@@ -13,12 +13,13 @@ import util.errors as CS27Exceptions
 from util.print import *
 import util.format as CS27Format
 
+SCRIPT_DIR = path.dirname(path.realpath(__file__))
+ID = SCRIPT_DIR.split('\\')[-1]
 NAME = "Non-text Content"
 DESCRIPTION = """All non-text content that is presented to the user has a text alternative
                   that serves the equivalent purpose, except for certain situations"""
 LINK = "https://www.w3.org/TR/WCAG21/#non-text-content"
 VERSION = 1
-SCRIPT_DIR = path.dirname(path.realpath(__file__))
 SKIP = False
 
 # Set env for google API credentials
@@ -48,17 +49,17 @@ def run(driver):
           alt_result['visible'] += 1
     
         properties = {
-          "self": image,
+          "css": CS27Format.css_selector(driver, image),
           "alt": image.get_attribute('alt'),
           "src": image.get_attribute('src'),
         }
         status = True if (properties['alt'] != '') else False
-
         if (status):
           alt_result['success'].append(properties)
         else:
-          print_error(f"'{CS27Format.css_selector(driver, image)}' does not have an alternative text!")
+          print_error(f"'{properties['css']}' does not have an alternative text!")
           alt_result['fail'].append(properties)
+          eel.add_result_to_rule_js(ID, 'fail', f"'{properties['css']}' does not have an alternative text!")
     
       success_count = len(alt_result['success'])
       fail_count = len(alt_result['fail'])
@@ -108,12 +109,13 @@ def run(driver):
         # Compile the regex and test it against the alt image
         regex_check = re.compile(f"({'|'.join(regex_labels)})", re.IGNORECASE)
         regex_result = regex_check.findall(image['alt'])
-
         if (len(regex_result)):
           content_result['success'].append(image)
+          eel.add_result_to_rule_js(ID, 'success', f"'{image['css']}' alternative text: \"{image['alt']}\" matches the image content!")
         else:
+          print_error(f"'{image['css']}' alternative text: \"{image['alt']}\" does not match the image content!")
           content_result['fail'].append(image)
-          print_error(f"'{CS27Format.css_selector(driver, image['self'])}' alternative text: \"{image['alt']}\" does not match the image content!")
+          eel.add_result_to_rule_js(ID, 'fail', f"'{image['css']}' alternative text: \"{image['alt']}\" does not match the image content!")
       
       success_count = len(content_result['success'])
       fail_count = len(content_result['fail'])

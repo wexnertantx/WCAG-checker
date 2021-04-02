@@ -1,6 +1,6 @@
 <template>
   <transition @enter="enter" @leave="leave" @afterEnter="afterEnter" appear>
-    <div v-show="visible" class="dropdown-vue" :class="[ type ]">
+    <div v-show="visible" class="dropdown-vue" :class="[ type, isInline ]">
       <component v-if="custom" :is="custom" :id="getId" class="dropdown" />
       <div v-else :id="getId" class="dropdown">
         <DropdownButton
@@ -24,7 +24,7 @@ export default {
   components: {
     DropdownButton: defineAsyncComponent(() => import('./Button.component')),
   },
-  props: ['id', 'custom', 'type', 'items', 'visible', 'selected', 'noselect'],
+  props: ['id', 'custom', 'type', 'items', 'visible', 'selected', 'noselect', 'inline'],
   emits: ['update:selected', 'update:visible'],
   mounted() {
     if (!this.selected) {
@@ -35,14 +35,17 @@ export default {
     getId() {
       return `dropdown-${this.id}`;
     },
+    isInline() {
+      return (this.inline) ? 'inline' : null;
+    },
   },
   methods: {
     getItemName(item) {
       return `${item}-${this.getId}`;
     },
     select(item) {
-      this.$emit('update:visible', false);
       if (this.noselect) return;
+      this.$emit('update:visible', false);
       this.$emit('update:selected', item);
     },
     /**
@@ -80,32 +83,39 @@ export default {
 
 <style lang="scss">
 .dropdown-vue {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 100%;
-  padding-top: 10px;
-  z-index: 5;
-  &:before, &:after {
-    content: "";
+  position: relative;
+  flex: 1;
+  &:not(.inline) {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    border-style: solid;
-    z-index: 1;
+    left: 0;
+    right: 0;
+    top: 100%;
+    padding-top: 10px;
+    z-index: 5;
   }
-  &:before {
-    bottom: calc(100% - 10px);
-    border-width: 0 6px 6px 6px;
-    border-style: solid;
-    border-color: $col-blue transparent;
-    z-index: 1;
-  }
-  &:after {
-    bottom: calc(100% - 11px);
-    border-width: 0 6px 6px 6px;
-    border-color: $col-blue transparent;
-  }
+  // &:before, &:after {
+  //   content: "";
+  //   position: absolute;
+  //   &.inline {
+  //     position: relative;
+  //   }
+  //   left: 50%;
+  //   transform: translateX(-50%);
+  //   border-style: solid;
+  //   z-index: 1;
+  // }
+  // &:before {
+  //   bottom: calc(100% - 10px);
+  //   border-width: 0 6px 6px 6px;
+  //   border-style: solid;
+  //   border-color: $col-blue transparent;
+  //   z-index: 1;
+  // }
+  // &:after {
+  //   bottom: calc(100% - 11px);
+  //   border-width: 0 6px 6px 6px;
+  //   border-color: $col-blue transparent;
+  // }
   .dropdown {
     display: flex;
     flex-direction: column;
@@ -113,7 +123,7 @@ export default {
     border-top: 1px solid $apricot;
     background-color: $col-blue;
     border-radius: 4px;
-    box-shadow: 0 0 20px #000;
+    // box-shadow: 0 0 20px #000;
     overflow-y: auto;
   }
 }

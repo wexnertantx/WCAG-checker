@@ -1,6 +1,6 @@
 from os import path, mkdir
 from shutil import rmtree
-import time
+import time, eel
 
 import imagehash
 from PIL import Image
@@ -14,11 +14,12 @@ import util.errors as CS27Exceptions
 from util.print import *
 import util.format as CS27Format
 
+SCRIPT_DIR = path.dirname(path.realpath(__file__))
+ID = SCRIPT_DIR.split('\\')[-1]
 NAME = "Audio Control"
 DESCRIPTION = """If any audio on a Web page plays automatically for more than 3 seconds, either a mechanism is available to pause or stop the audio, or a mechanism is available to control audio volume independently from the overall system volume level."""
 LINK = "https://www.w3.org/TR/WCAG21/#headings-and-labels"
 VERSION = 1
-SCRIPT_DIR = path.dirname(path.realpath(__file__))
 SKIP = False
 
 ###
@@ -113,11 +114,14 @@ def run(driver):
           else:
             level += 1
 
+        element_css = CS27Format.css_selector(driver, element['self'])
         if (found):
           media_control['success'].append(element)
+          eel.add_result_to_rule_js(ID, 'success', f"'{element_css}' has autoplay enabled and controls have been found!")
         else:
           media_control['fail'].append(element)
-          print_error(f"'{CS27Format.css_selector(driver, element['self'])}' has autoplay enabled but no controls could be found!")
+          print_error(f"'{element_css}' has autoplay enabled but no controls could be found!")
+          eel.add_result_to_rule_js(ID, 'fail', f"'{element_css}' has autoplay enabled but no controls could be found!")
 
     if (path.exists(tmp_folder)):
       rmtree(tmp_folder)
