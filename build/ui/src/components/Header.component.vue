@@ -7,11 +7,11 @@
     </div>
     <div class="process-wrapper">
       <div class="process">
-        <Button v-bind="buttons.startProcess" :icon="getProcessStateIcon" :pending="isProcessPending" />
+        <Button v-bind="buttons.startProcess" :icon="getProcessStateIcon" :pending="$store.getters['process/isActionPending']" />
         <Divider :vertical="true" />
-        <input v-model="process.website" placeholder="http://www.amazon.com/" :disabled="isProcessRunning" />
+        <input v-model="process.website" placeholder="http://www.amazon.com/" :disabled="$store.getters['process/isProcessRunning']" />
       </div>
-      <Button v-if="isProcessRunning" v-bind="buttons.stopProcess" icon="stop" />
+      <Button v-if="$store.getters['process/isProcessRunning']" v-bind="buttons.stopProcess" icon="stop" />
     </div>
     <div class="navigation-wrapper">
       <Button v-bind="buttons.rules" />
@@ -24,6 +24,7 @@
 <script>
 import Divider from '@/components/Divider.component.vue';
 import Button from '@/components/Button.component.vue';
+import { PROCESS_STATES } from '@/lib/enum.js';
 
 export default {
   components: { Button, Divider },
@@ -36,27 +37,17 @@ export default {
         stopProcess: { name: 'stop-process', type: 'icon', click: this.stopProcess },
         startProcess: { name: 'start-process', type: 'icon', click: this.toggleProcessState },
         rules: { name: 'rules', type: 'icon', icon: 'calendar-check', click: this.rulesDebug },
-        settings: { name: 'settings', type: 'icon', icon: 'settings', click: () => { } },
+        settings: { name: 'settings', type: 'icon', icon: 'settings', href: '/settings' },
         quit: { name: 'exit', type: 'icon', icon: 'power-off', click: this.quit },
       },
     };
   },
   computed: {
-    isProcessRunning() {
-      const processStatus = this.$store.getters['process/getStatus'];
-      if (processStatus === 'RUNNING' || processStatus === 'PAUSED') {
-        return true;
-      }
-      return false;
-    },
-    isProcessPending() {
-      return this.$store.getters['process/isActionPending'];
-    },
     getProcessStateIcon() {
-      switch (this.$store.getters['process/getStatus']) {
-        case 'RUNNING': return 'pause';
-        case 'PAUSED':
-        case 'STOPPED':
+      switch (this.$store.getters['process/getProcessStatus']) {
+        case PROCESS_STATES.RUNNING: return 'pause';
+        case PROCESS_STATES.PAUSED:
+        case PROCESS_STATES.STOPPED:
         default:
           return 'play';
       }
@@ -67,6 +58,7 @@ export default {
       window.close();
     },
     rulesDebug() {
+      console.log(this.$store.getters['config/getConfig']);
       const rules = this.$store.getters['process/getRules'];
       const ruleKeys = Object.keys(rules);
       for (let k = 0; k < ruleKeys.length; k++) {
@@ -77,10 +69,10 @@ export default {
       this.$store.dispatch('process/stopProcess');
     },
     toggleProcessState() {
-      switch (this.$store.getters['process/getStatus']) {
-        case 'RUNNING': return this.$store.dispatch('process/pauseProcess');
-        case 'PAUSED':
-        case 'STOPPED':
+      switch (this.$store.getters['process/getProcessStatus']) {
+        case PROCESS_STATES.RUNNING: return this.$store.dispatch('process/pauseProcess');
+        case PROCESS_STATES.PAUSED:
+        case PROCESS_STATES.STOPPED:
         default:
           return this.$store.dispatch('process/startProcess', this.process.website);
       }
@@ -96,10 +88,10 @@ export default {
   display: grid;
   grid-template-columns: 3fr 4fr 3fr;
   grid-template-areas: "left middle right";
+  column-gap: 10px;
   min-height: 60px;
   padding: 4px 30px;
   border-top: 1px solid $col-bg;
-  // background-color: rgba(white, .2);
 
   .logo-wrapper {
     grid-area: left;

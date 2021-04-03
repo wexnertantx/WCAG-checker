@@ -1,6 +1,5 @@
-import { tooltipDirective } from '@/directives/_index';
-
 import { createApp } from 'vue';
+import { tooltipDirective } from '@/directives/_index';
 import App from './App.vue';
 import router from './router';
 import store from './store';

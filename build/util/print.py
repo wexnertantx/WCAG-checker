@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from platform import system
 import sys
 

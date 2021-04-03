@@ -1,8 +1,10 @@
-import yaml
+import yaml, json, eel
+
+CONFIG_FILE = 'config.yml'
 
 config = {}
-with open('config.yml', 'r') as file:
-  config = yaml.load(file, Loader=yaml.FullLoader)
+with open(CONFIG_FILE, 'r') as f:
+  config = yaml.load(f, Loader=yaml.FullLoader)
 
 def get(key):
   if (key):
@@ -13,3 +15,25 @@ def get(key):
     return config[key]
 
   return config
+
+@eel.expose
+def eel_save_config(data, key=None):
+  data = json.loads(data)
+  if key != None:
+    config[key] = data
+  else:
+    config = data
+  
+  yaml_str = yaml.dump(config, default_flow_style=False)
+  with open(CONFIG_FILE, 'w') as f:
+    f.write(yaml_str)
+
+@eel.expose
+def eel_load_config(key=None):
+  if key != None:
+    json_str = json.dumps(config[key])
+  else:
+    json_str = json.dumps(config)
+  
+  return json_str
+    

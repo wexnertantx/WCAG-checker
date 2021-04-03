@@ -1,10 +1,8 @@
 <template>
-  <div v-if="isCondition" class="input-vue" :class="[ hasFailed ]">
+  <div class="input-vue" :class="[ hasFailed ]">
     <div class="inner-input">
       <label v-if="label" :for="getId" class="label">{{ label }}</label>
-      <textarea v-if="isTextarea" :id="getId" :name="getId" :placeholder="placeholder" rows="3" v-model="model" :maxlength="maxlength" tabIndex="0" />
       <input v-else :id="getId" :name="getId" :type="getInputType" :placeholder="placeholder" v-model="model" :maxlength="maxlength" tabIndex="0" />
-      <span v-if="maxlength" class="input-limit">{{ getCharLimit }}</span>
     </div>
     <Icon v-if="error" class="error" name="warning" v-tooltip="{ type: 'alert', text: error }"></Icon>
   </div>

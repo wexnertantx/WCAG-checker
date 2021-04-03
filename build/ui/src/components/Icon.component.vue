@@ -51,10 +51,22 @@ export default {
 .icon-play:before { content: $icon-play; }
 .icon-spinner:before {
   content: $icon-spinner;
-  animation: spin 1s linear infinite;
+  animation: spin 2s linear infinite;
 }
 .icon-calendar-check:before { content: $icon-calendar-check; }
 .icon-home:before { content: $icon-home; }
 .icon-cancel-circle:before { content: $icon-cancel-circle; }
+.icon-check-circle-f:before { content: $icon-check-circle-f; }
+.icon-clear:before { content: $icon-clear; }
+.icon-x-circle:before { content: $icon-x-circle; }
+.icon-help-circle:before { content: $icon-help-circle; }
+.icon-alert-circle:before { content: $icon-alert-circle; }
+.icon-minus-circle:before { content: $icon-minus-circle; }
 .icon-check-circle:before { content: $icon-check-circle; }
+.icon-circle:before { content: $icon-circle; }
+.icon-spinner2:before {
+  content: $icon-spinner2;
+  animation: spin 2s linear infinite;
+}
+.icon-external-link:before { content: $icon-external-link; }
 </style>

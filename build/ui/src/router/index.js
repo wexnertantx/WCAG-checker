@@ -7,14 +7,26 @@ const routes = [
     name: 'Home',
     component: Home,
   },
-  // {
-  //   path: '/result/:rule',
-  //   name: 'Details',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  // },
+  {
+    path: '/results/:rule',
+    name: 'Results',
+    component: () => import('@/views/Results.vue'),
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () => import('@/views/Settings.vue'),
+  },
+  {
+    path: '/settings/set-api',
+    name: 'SetAPI',
+    component: () => import('@/views/Settings/SetAPI.vue'),
+  },
+  {
+    path: '/settings/set-rules',
+    name: 'SetRules',
+    component: () => import('@/views/Settings/SetRules.vue'),
+  },
 ];
 
 const router = createRouter({

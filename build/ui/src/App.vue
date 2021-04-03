@@ -1,76 +1,73 @@
 <template>
   <Header />
   <div class="body">
-    <section class="sidebar">
-      <Button v-bind="buttons.home">Home</Button>
-      <template v-if="getRulesButtons.length">
-        <Divider />
-        <span class="category">ACCESSIBILITY RULES</span>
-        <Button v-for="rule in getRulesButtons" :key="rule.name" v-bind="rule" />
-      </template>
-    </section>
-    <router-view class="page" />
+    <Sidebar />
+    <router-view class="page" v-slot="{ Component }">
+      <transition name="switch" mode="out-in">
+        <component :key="$route.path" :is="Component" />
+      </transition>
+    </router-view>
   </div>
 </template>
 
 <script>
 import Header from '@/components/Header.component.vue';
-import Button from '@/components/Button.component.vue';
-import Divider from '@/components/Divider.component.vue';
+import Sidebar from '@/components/Sidebar.component.vue';
+import { RULE_STATES } from '@/lib/enum.js';
 
 export default {
-  components: { Header, Button, Divider },
-  data() {
-    return {
-      buttons: {
-        home: { name: 'home', type: 'menu', icon: 'home', href: '/' },
-      },
-    };
-  },
+  components: { Header, Sidebar },
   async created() {
-    window.eel.expose(this.eelAddResultToRule, 'add_result_to_rule_js');
-    window.eel.expose(this.eelFinishAction, 'finish_action_js');
-    window.eel.expose(this.eelFinishProcess, 'finish_process_js');
-    window.eel.expose(this.eelFinishRule, 'finish_rule_js');
+    // Eel bridge functions binding
+    window.eel.expose(this.eelOnPythonActionFinish, 'send_python_action_finish_event');
+    window.eel.expose(this.eelOnProcessFinish, 'send_process_finish_event');
+    window.eel.expose(this.eelOnRuleResult, 'send_rule_result_event');
+    window.eel.expose(this.eelOnRuleStateChange, 'send_rule_state_change_event');
 
+    // Load config
+    const config = await window.eel.eel_load_config()();
+    this.$store.commit('config/setConfig', JSON.parse(config));
+
+    // Request loaded rules from Python
     const rules = await window.eel.eel_request_rules()();
     for (let i = 0; i < rules.length; i++) {
       this.$store.dispatch('process/addRule', rules[i]);
     }
   },
-  computed: {
-    isProcessRunning() {
-      const processStatus = this.$store.getters['process/getStatus'];
-      if (processStatus === 'RUNNING' || processStatus === 'PAUSED') {
-        return true;
-      }
-      return false;
-    },
-    getRulesButtons() {
-      const rules = this.$store.getters['process/getRules'];
-      const keys = Object.keys(rules);
-      const items = keys.map((key) => {
-        if (!this.isProcessRunning && rules[key].status !== 'FINISHED') {
-          return false;
-        }
-        return {
-          name: key,
-          text: rules[key].name,
-          type: (rules[key].status === 'FINISHED') ? 'green menu-sub' : 'menu-sub',
-          href: `/rules/${rules[key].id}`,
-          icon: (rules[key].status === 'FINISHED') ? 'check-circle' : 'spinner',
-        };
-      }).filter(item => item !== false);
-      return items;
-    },
-  },
   methods: {
-    eelAddResultToRule(rule, status, message) {
-      this.$store.commit('process/addResultToRule', { rule, status, message });
+    // Eel bridge functions action
+    eelOnPythonActionFinish() {
+      try {
+        this.$store.commit('OnPythonActionFinish');
+      } catch (error) {
+        console.error(error);
+      }
     },
-    eelFinishProcess() { this.$store.commit('process/finishProcess'); },
-    eelFinishAction() { this.$store.commit('process/finishAction'); },
-    eelFinishRule(rule) { this.$store.commit('process/finishRule', rule); },
+    eelOnProcessFinish() {
+      try {
+        this.$store.commit('process/OnProcessFinish');
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    eelOnRuleResult(ruleId, status, message) {
+      try {
+        this.$store.commit('process/OnRuleResult', { ruleId, status, message });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    eelOnRuleStateChange(ruleId, status) {
+      try {
+        const disabled = this.$store.getters['process/isRuleDisabled'](ruleId);
+        if (status === RULE_STATES.RUNNING && !disabled) {
+          this.$router.push({ name: 'Results', params: { rule: ruleId } });
+        }
+        this.$store.commit('process/OnRuleStateChange', { ruleId, status });
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 };
 </script>
@@ -110,29 +107,23 @@ html, body, #app {
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: $col-text-def;
 
   .body {
     flex: 1;
     display: flex;
     margin-top: 25px;
-    .sidebar {
-      flex: 0 0 250px;
-      display: flex;
-      flex-direction: column;
-      padding: 0 16px;
-      .category {
-        font-weight: 600;
-        font-size: 12px;
-        margin-bottom: 15px;
-      }
-    }
     .page {
       flex: 1;
       display: flex;
       flex-direction: column;
-      // background-color: rgba(pink, .2);
+      margin: 15px;
+
+      &.settings .settings-section {
+        margin-bottom: 40px;
+        font-size: 2rem;
+        text-align: center;
+      }
     }
   }
 }
@@ -141,11 +132,6 @@ a {
   color: inherit;
   outline: none;
   text-decoration: inherit;
-  // transition: color .2s ease;
-  // &:not(.router-link-active):hover {
-  //   color: lighten($col-text-def, 20%);
-  //   text-shadow: 0 0 1px $col-text-def;
-  // }
 }
 
 input, textarea {
@@ -155,5 +141,14 @@ input, textarea {
   overflow: hidden;
   line-height: 0;
   color: rgba($col-text, .6);
+}
+
+.switch-enter-active, .switch-leave-active {
+  transition: transform .4s ease, opacity .2s ease;
+}
+
+.switch-enter-from, .switch-leave-to {
+  transform: scale(0.9);
+  opacity: 0;
 }
 </style>
