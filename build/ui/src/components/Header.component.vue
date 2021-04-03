@@ -25,7 +25,7 @@
 <script>
 import Divider from '@/components/Divider.component.vue';
 import Button from '@/components/Button.component.vue';
-import { PROCESS_STATES } from '@/lib/enum.js';
+import { PROCESS_STATES } from '@/util/enum.js';
 
 export default {
   components: { Button, Divider },

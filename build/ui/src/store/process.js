@@ -1,4 +1,4 @@
-import { PROCESS_STATES, RULE_STATES } from '@/lib/enum.js';
+import { PROCESS_STATES, RULE_STATES } from '@/util/enum.js';
 
 export default {
   namespaced: true,

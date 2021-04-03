@@ -13,7 +13,7 @@
 <script>
 import Header from '@/components/Header.component.vue';
 import Sidebar from '@/components/Sidebar.component.vue';
-import { RULE_STATES } from '@/lib/enum.js';
+import { RULE_STATES } from '@/util/enum.js';
 
 export default {
   components: { Header, Sidebar },
