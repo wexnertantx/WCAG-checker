@@ -98,11 +98,11 @@ export default {
     cursor: pointer;
     .text {
       text-align: center;
-      &:nth-child(2) { margin-left: 4px; }
+      &:nth-child(2) { margin-left: 8px; }
     }
     .icon-vue {
       position: relative;
-      &:nth-child(2) { margin-left: 4px; }
+      &:nth-child(2) { margin-left: 8px; }
     }
     &.inversed {
       .text { order: 1; }

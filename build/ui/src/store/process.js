@@ -3,12 +3,17 @@ import { PROCESS_STATES, RULE_STATES } from '@/lib/enum.js';
 export default {
   namespaced: true,
   state: {
+    driver: 'chrome',
     website: null,
     status: PROCESS_STATES.STOPPED,
     rules: {},
-    pendingAction: false,
   },
   getters: {
+    /**
+     * Returns the selected driver
+     * @returns {String}  The name of the driver
+     */
+    getDriver: state => state.driver,
     /**
      * Returns the status of the process
      * @returns {Number}  The status of the process, see enum.js PROCESS_STATES
@@ -43,6 +48,13 @@ export default {
         success: [],
         fail: [],
       };
+    },
+    /**
+     * Sets the target driver for the process
+     * @param {String} website    - The driver to use with selenium
+     */
+    setDriver(state, driver) {
+      state.driver = driver;
     },
     /**
      * Sets the target website for the process
@@ -116,7 +128,7 @@ export default {
       commit('OnPythonActionStart', null, { root: true });
 
       commit('setWebsite', website);
-      await window.eel.eel_start_process(website);
+      await window.eel.eel_start_process(getters.getDriver, website)();
     },
     /**
      * Pauses the analyzing process
@@ -127,7 +139,7 @@ export default {
       commit('setStatus', PROCESS_STATES.PAUSED);
       commit('OnPythonActionStart', null, { root: true });
 
-      await window.eel.eel_pause_process();
+      await window.eel.eel_pause_process()();
     },
     /**
      * Stops the analyzing process
@@ -138,7 +150,7 @@ export default {
       commit('setStatus', PROCESS_STATES.STOPPED);
       commit('OnPythonActionStart', null, { root: true });
 
-      await window.eel.eel_stop_process();
+      await window.eel.eel_stop_process()();
     },
   },
 };

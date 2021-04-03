@@ -69,4 +69,9 @@ export default {
   animation: spin 2s linear infinite;
 }
 .icon-external-link:before { content: $icon-external-link; }
+.icon-save:before { content: $icon-save; }
+.icon-key:before { content: $icon-key; }
+.icon-check:before { content: $icon-check; }
+.icon-firefox:before { content: $icon-firefox; }
+.icon-chrome:before { content: $icon-chrome; }
 </style>

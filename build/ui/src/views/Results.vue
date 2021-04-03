@@ -1,8 +1,6 @@
 <template>
   <div class="results">
-    <div v-if="!isRuleValid" class="not-found">
-      This rule is invalid
-    </div>
+    <div v-if="!isRuleValid" class="not-found">The rule "{{ $route.params.rule }}" is invalid</div>
     <template v-else>
       <header class="rule-header">
         <div class="rule-name">
@@ -23,7 +21,8 @@
         <div class="section-title">DESCRIPTION</div>
         <div class="description">{{ getRuleData.description }}</div>
       </div>
-      <template v-if="totalResults">
+      <div v-if="$store.getters['process/isRuleDisabled'](this.getRuleData.id)" class="not-found">This rule is currently disabled</div>
+      <template v-else>
         <div class="section rule-results-graph">
           <Widget class="success-widget" v-bind="getSuccessWidgetData" />
           <Widget class="fail-widget" v-bind="getFailWidgetData" />
@@ -81,7 +80,7 @@ export default {
         ],
         bar: {
           color: '#C8F902',
-          ratio: this.getSuccessRatio,
+          ratio: (this.totalResults) ? this.getSuccessRatio : 0,
           info: 'of components have succeeded',
         },
       };
@@ -95,7 +94,7 @@ export default {
         ],
         bar: {
           color: '#FF6347',
-          ratio: (1.0 - this.getSuccessRatio),
+          ratio: (this.totalResults) ? (1.0 - this.getSuccessRatio) : 0,
           info: 'of components have failed',
         },
       };
@@ -179,6 +178,14 @@ export default {
 @import '@/scss/_mixins';
 
 .results {
+  .not-found {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    text-align: center;
+  }
   .rule-header {
     display: flex;
     align-items: center;

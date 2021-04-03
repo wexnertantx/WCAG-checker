@@ -30,7 +30,7 @@ def run(driver):
   if (not path.exists(tmp_folder)):
     mkdir(tmp_folder, mode=0o777)
 
-  results_percentage = []
+  results_percentage = None
 
   images = driver.find_elements(By.TAG_NAME, "img")
   if (len(images)):
@@ -57,13 +57,6 @@ def run(driver):
         alt_result['fail'].append(properties)
         CS27Gui.run_eel('send_rule_result_event')(ID, 'fail', f"'{properties['css']}' does not have an alternative text!")
   
-    success_count = len(alt_result['success'])
-    fail_count = len(alt_result['fail'])
-    visible_count = alt_result['visible']
-    images_count = len(images)
-
-    results_percentage.append(success_count/images_count)
-
     # Detect image content, check if matches with label
     # Load custom translations
     with open(path.join(SCRIPT_DIR, "translations.txt")) as translation_file:
@@ -114,16 +107,16 @@ def run(driver):
         CS27Gui.run_eel('send_rule_result_event')(ID, 'fail', f"'{image['css']}' alternative text: \"{image['alt']}\" does not match the image content!")
     
     success_count = len(content_result['success'])
-    fail_count = len(content_result['fail'])
-    images_count = len(images)
+    fail_count = len(content_result['fail']) + len(alt_result['fail'])
+    images_count = success_count + fail_count
 
-    results_percentage.append(success_count/images_count)
+    results_percentage = (success_count/images_count)
       
     if (path.exists(tmp_folder)):
       rmtree(tmp_folder)
 
-    if (len(results_percentage)):
-      return (sum(results_percentage) / len(results_percentage)) * 100, "% of the page's image content is correct"
+    if (results_percentage != None):
+      return results_percentage * 100, "% of the headers match their immediate content"
   else:
     return None, "Page has no images"
 

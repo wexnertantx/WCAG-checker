@@ -16,14 +16,14 @@ export default createStore({
      * Blocks every UI action until Python tasks finishes
      */
     OnPythonActionStart(state) {
-      state.pendingPythonAction = false;
+      state.pendingPythonAction = true;
     },
     /**
      * Event handler that runs when an UI action finished communicating with Python
      * Unblocks every UI action, call from Python with eel.send_python_action_finish_event
      */
     OnPythonActionFinish(state) {
-      state.pendingPythonAction = true;
+      state.pendingPythonAction = false;
     },
   },
   actions: {},

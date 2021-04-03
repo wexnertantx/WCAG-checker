@@ -19,10 +19,10 @@ process_state = PROCESS_STATES['STOPPED']
 
 ### eel bridge functions
 @eel.expose
-def eel_start_process(website):
+def eel_start_process(driver, website):
   global process_state
   if process_state == PROCESS_STATES['STOPPED']:
-    threading.Thread(target=analyze_page, args=('chrome', website)).start()
+    threading.Thread(target=analyze_page, args=(driver, website)).start()
   else:
     set_process_state(PROCESS_STATES['RUNNING'])
 

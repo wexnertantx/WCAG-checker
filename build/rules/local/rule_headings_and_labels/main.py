@@ -95,7 +95,7 @@ def run(driver):
     
     success_count = len(header_content['success'])
     fail_count = len(header_content['fail'])
-    header_count = len(header_elements)
+    header_count = success_count + fail_count
 
     results_percentage = (success_count/header_count)
 

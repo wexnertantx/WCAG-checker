@@ -7,6 +7,7 @@ with open(CONFIG_FILE, 'r') as f:
   config = yaml.load(f, Loader=yaml.FullLoader)
 
 def get(key):
+  global config
   if (key):
     if (key not in config):
       print(f"{key} is not a valid config key")
@@ -18,6 +19,7 @@ def get(key):
 
 @eel.expose
 def eel_save_config(data, key=None):
+  global config
   data = json.loads(data)
   if key != None:
     config[key] = data
@@ -30,6 +32,7 @@ def eel_save_config(data, key=None):
 
 @eel.expose
 def eel_load_config(key=None):
+  global config
   if key != None:
     json_str = json.dumps(config[key])
   else:

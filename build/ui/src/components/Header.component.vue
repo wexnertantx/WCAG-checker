@@ -6,17 +6,18 @@
       <div class="dashboard">Dashboard</div>
     </div>
     <div class="process-wrapper">
+      <Button v-bind="buttons.toggleDriver" :icon="$store.getters['process/getDriver']" />
       <div class="process">
-        <Button v-bind="buttons.startProcess" :icon="getProcessStateIcon" :pending="$store.getters['process/isActionPending']" />
+        <Button v-bind="buttons.startProcess" :icon="getProcessStateIcon" :pending="$store.getters.isPendingPythonAction" />
         <Divider :vertical="true" />
         <input v-model="process.website" placeholder="http://www.amazon.com/" :disabled="$store.getters['process/isProcessRunning']" />
       </div>
       <Button v-if="$store.getters['process/isProcessRunning']" v-bind="buttons.stopProcess" icon="stop" />
     </div>
     <div class="navigation-wrapper">
-      <Button v-bind="buttons.rules" />
+      <!-- <Button v-bind="buttons.rules" /> -->
       <Button v-bind="buttons.settings" />
-      <Button v-bind="buttons.quit" />
+      <!-- <Button v-bind="buttons.quit" /> -->
     </div>
   </header>
 </template>
@@ -34,6 +35,7 @@ export default {
         website: null,
       },
       buttons: {
+        toggleDriver: { name: 'toggle-driver', type: 'icon', click: this.toggleDriver },
         stopProcess: { name: 'stop-process', type: 'icon', click: this.stopProcess },
         startProcess: { name: 'start-process', type: 'icon', click: this.toggleProcessState },
         rules: { name: 'rules', type: 'icon', icon: 'calendar-check', click: this.rulesDebug },
@@ -43,6 +45,9 @@ export default {
     };
   },
   computed: {
+    getDriverIcon() {
+      return this.$store.getters['process/getDriver'];
+    },
     getProcessStateIcon() {
       switch (this.$store.getters['process/getProcessStatus']) {
         case PROCESS_STATES.RUNNING: return 'pause';
@@ -55,10 +60,10 @@ export default {
   },
   methods: {
     quit() {
-      window.close();
+      window.open('', '_self').close();
     },
     rulesDebug() {
-      console.log(this.$store.getters['config/getConfig']);
+      console.log(this.$store);
       const rules = this.$store.getters['process/getRules'];
       const ruleKeys = Object.keys(rules);
       for (let k = 0; k < ruleKeys.length; k++) {
@@ -70,12 +75,25 @@ export default {
     },
     toggleProcessState() {
       switch (this.$store.getters['process/getProcessStatus']) {
-        case PROCESS_STATES.RUNNING: return this.$store.dispatch('process/pauseProcess');
+        case PROCESS_STATES.RUNNING: {
+          this.$store.dispatch('process/pauseProcess');
+          break;
+        }
+        case PROCESS_STATES.STOPPED: {
+          if (!this.process.website?.length) {
+            break;
+          }
+        }
+        // eslint-disable-next-line no-fallthrough
         case PROCESS_STATES.PAUSED:
-        case PROCESS_STATES.STOPPED:
         default:
-          return this.$store.dispatch('process/startProcess', this.process.website);
+          this.$store.dispatch('process/startProcess', this.process.website);
+          break;
       }
+    },
+    toggleDriver() {
+      const driver = (this.$store.getters['process/getDriver'] === 'chrome') ? 'firefox' : 'chrome';
+      this.$store.commit('process/setDriver', driver);
     },
   },
 };
@@ -115,6 +133,10 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    column-gap: 10px;
+    .btn-toggle-driver {
+      width: 24px;
+    }
     .process {
       flex: 1;
       display: flex;
@@ -128,7 +150,6 @@ export default {
       }
     }
     .button { font-size: 1.4em; }
-    .btn-stop-process { margin-left: 10px; }
   }
 
   .navigation-wrapper {

@@ -69,7 +69,7 @@ def run(driver):
 
     success_count = len(lang_results['success'])
     fail_count = len(lang_results['fail'])
-    text_count = len(page_text)
+    text_count = success_count + fail_count
 
     results_percentage = (success_count/text_count)
 

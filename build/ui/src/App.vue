@@ -46,6 +46,7 @@ export default {
     eelOnProcessFinish() {
       try {
         this.$store.commit('process/OnProcessFinish');
+        this.$store.commit('OnPythonActionFinish');
       } catch (error) {
         console.error(error);
       }
@@ -119,10 +120,17 @@ html, body, #app {
       flex-direction: column;
       margin: 15px;
 
-      &.settings .settings-section {
-        margin-bottom: 40px;
-        font-size: 2rem;
-        text-align: center;
+      &.settings {
+        .settings-section {
+          margin-bottom: 40px;
+          font-size: 2rem;
+          text-align: center;
+        }
+        .settings-controls {
+          display: flex;
+          justify-content: center;
+          column-gap: 10px;
+        }
       }
     }
   }

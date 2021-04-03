@@ -4,11 +4,12 @@
     <div class="settings-wrapper">
       <div class="input-wrapper">
         <label for="detectlanguage" class="input-label">DetectLanguage API Key:</label>
-        <input id="detectlanguage" v-model="getAPIConfig.detectlanguage" />
+        <input id="detectlanguage" v-model="getAPIConfig.detectlanguage" @input="onChange" />
       </div>
     </div>
     <div class="settings-controls">
-      <Button v-bind="buttons.save">Save Changes</Button>
+      <Button v-if="isChanged" v-bind="buttons.reset" :pending="$store.getters['config/isConfigActionPending']">Reset Changes</Button>
+      <Button v-if="isChanged" v-bind="buttons.save" :pending="$store.getters['config/isConfigActionPending']">Save Changes</Button>
     </div>
   </div>
 </template>
@@ -20,8 +21,10 @@ export default {
   components: { Button },
   data() {
     return {
+      isChanged: false,
       buttons: {
-        save: { name: 'exit', type: 'dialog', icon: 'power-off', click: this.save },
+        save: { name: 'save', type: 'dialog', icon: 'save', click: this.save },
+        reset: { name: 'reset', type: 'dialog', icon: 'x-circle', click: this.reset },
       },
     };
   },
@@ -31,14 +34,22 @@ export default {
     },
   },
   methods: {
+    onChange() {
+      this.isChanged = true;
+    },
     save() {
-      console.log('saving');
+      this.$store.dispatch('config/saveConfigByKey', 'api');
+      this.isChanged = false;
+    },
+    reset() {
+      this.$store.dispatch('config/loadConfigByKey', 'api');
+      this.isChanged = false;
     },
   },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .settings-wrapper {
   flex: 1;
   display: flex;

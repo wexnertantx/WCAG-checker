@@ -72,7 +72,6 @@ def eel_request_rules():
       "description": rule.DESCRIPTION,
       "version": rule.VERSION,
       "link": rule.LINK,
-      "disabled": is_rule_disabled(rule.ID),
       "local": is_local_rule(rule.SCRIPT_DIR)
     })  
   return rules

@@ -124,7 +124,7 @@ def run(driver):
 
   success_count = len(media_control['success'])
   fail_count = len(media_control['fail'])
-  autoplay_count = len(media_autoplay)
+  autoplay_count = success_count + fail_count
 
   results_percentage = (success_count/autoplay_count)
 

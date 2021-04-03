@@ -40,7 +40,7 @@ def main(argv):
   if not CS27Gui.is_started():
     CS27Process.analyze_page(driver, args[0])
   else:
-    eel.init('ui/dist')
-    eel.start('index.html', port=8123, close_callback=eel_close)
+    eel.init('ui/build')
+    eel.start('index.html', port=8123, close_callback=eel_close, size=(1800, 1200))
 
 main(sys.argv[1:])
