@@ -1,0 +1,10 @@
+# Rules config
+api:
+  detectlanguage: 3af1a02a97678b5ab470959a24481d25
+rules:
+  local:
+    disabled:
+      - rule_language_of_page
+      - rule_non_text_content
+  external:
+    disabled:
