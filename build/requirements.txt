@@ -2,7 +2,7 @@
 pyyaml
 selenium
 spacy
-beautifulsoup4
 imagehash
 google-cloud-vision
 detectlanguage
+eel

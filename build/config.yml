@@ -1,3 +1,9 @@
-# Driver settings
-driver: 'chrome' # Available options: chrome, firefox
-website: 'https://stackoverflow.com' # Which website to crawl // TODO: Command line argument
+api:
+  detectlanguage: 4b09bd385720f75cf59939040e5b0d15
+rules:
+  external:
+    disabled: []
+  local:
+    disabled:
+    - rule_non_text_content
+    - rule_language_of_page
