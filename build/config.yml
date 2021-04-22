@@ -4,6 +4,4 @@ rules:
   external:
     disabled: []
   local:
-    disabled:
-    - rule_non_text_content
-    - rule_language_of_page
+    disabled: []

@@ -19,7 +19,7 @@
 <script>
 import Button from '@/components/Button.component.vue';
 import Divider from '@/components/Divider.component.vue';
-import { RULE_STATES } from '@/lib/enum.js';
+import { RULE_STATES } from '@/util/enum.js';
 
 export default {
   components: { Button, Divider },

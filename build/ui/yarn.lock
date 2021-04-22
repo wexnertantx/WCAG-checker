@@ -4482,11 +4482,6 @@ hex-color-regex@^1.1.0:
   resolved "https://registry.yarnpkg.com/hex-color-regex/-/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
   integrity sha512-l9sfDFsuqtOqKDsQdqrMRk0U85RZc0RtOR9yPI7mRVOa4FsR/BVnZ0shmQRM96Ji99kYZP/7hn1cedc1+ApsTQ==
 
-highcharts-vue@^1.3.5:
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/highcharts-vue/-/highcharts-vue-1.3.5.tgz#9a3e5f6050bf0227c19238433abfb17ab7262db3"
-  integrity sha512-By1kc3m8XoI20pMshs/ue69j4rH6eQioDPoIrtC20RTti4QyvNAx8DisGSO3GAWe9sn50hPk8NsyxcwZIGaz3Q==
-
 highlight.js@^10.7.1:
   version "10.7.1"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-10.7.1.tgz#a8ec4152db24ea630c90927d6cae2a45f8ecb955"
@@ -5240,18 +5235,6 @@ jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
   integrity sha1-peZUwuWi3rXyAdls77yoDA7y9RM=
-
-jscharting-vue@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/jscharting-vue/-/jscharting-vue-1.2.2.tgz#e016107860010d3c6ffed5136b13206031016657"
-  integrity sha512-tFc5HMqDZ+CY5X9L1vGRkPZqOUVouKFvOQNk3L/9XadLjgz9IB4D4slfdfD1oEomZ3DDtK5QXPDGad/YgW2sYQ==
-  dependencies:
-    jscharting "^3.0.2"
-
-jscharting@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/jscharting/-/jscharting-3.0.2.tgz#137f1015c1aed89eb0c667d4e1ce319d148f9e11"
-  integrity sha512-8Yb8iV1FUXEM9CuyO9wxV/1giw/gPgxqtnzTw5C+AvSsODXXzJOXtzkWtl6sZ3loQpoNPl+ZGsc6ZYKRxHGc9A==
 
 jsesc@^2.5.1:
   version "2.5.2"

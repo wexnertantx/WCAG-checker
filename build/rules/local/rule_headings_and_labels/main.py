@@ -1,5 +1,4 @@
 from os import path
-from bs4 import BeautifulSoup
 import time, re, eel
 import spacy
 from subprocess import check_output
