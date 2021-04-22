@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys, getopt, eel, re
+import sys, getopt, eel, re, traceback
 
 # Custom imports
 from util.print import *
@@ -56,11 +56,13 @@ def main(argv):
       if (len(re.findall(r"Chrome", str(err)))):
         print_error('Could not find a Google Chrome installation, retrying with Edge')
         eel_start('edge')
-      if (len(re.findall(r"Edge", str(err)))):
-        print_error('Could not find an Edge installation, retrying with Electron')
-        eel_start('electron')
-      if (len(re.findall(r"Electron", str(err)))):
-        print_error('Could not find an Electron installation, falling back to browser mode')
+      elif (len(re.findall(r"Edge", str(err)))):
+        print_error('Could not find an Edge installation, falling back to browser mode')
         eel_start('browser')
+      else:
+        print_begin_color('bright_red')
+        print("\neel failed to start, check the traceback below to find a reason\n")
+        traceback.print_exc(file=sys.stdout)
+        print_end_color()
 
 main(sys.argv[1:])
